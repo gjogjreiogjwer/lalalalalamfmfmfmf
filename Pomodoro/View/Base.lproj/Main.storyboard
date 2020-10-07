@@ -174,6 +174,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WLL-Qk-jSe">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="81" translatesAutoresizingMaskIntoConstraints="NO" id="zrZ-Sc-Tba">
                                 <rect key="frame" x="104.66666666666669" y="209" width="205" height="200.66666666666663"/>
                                 <subviews>
@@ -229,6 +233,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="background" destination="WLL-Qk-jSe" id="Zjw-Rt-IMT"/>
                         <outlet property="muteBotton" destination="yFb-ff-8gw" id="sWF-qr-Kse"/>
                         <outlet property="pauseButton" destination="L8M-tT-dsW" id="Gh8-XB-DwB"/>
                         <outlet property="startButton" destination="NyT-i8-M6i" id="8Ys-mG-lQQ"/>
@@ -237,7 +242,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SkZ-ek-VyB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2048" y="411"/>
+            <point key="canvasLocation" x="2047.826086956522" y="410.054347826087"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="jTI-Qn-Dzv">

@@ -22,17 +22,49 @@ class TimerController: UIViewController {
     var i = 0
     let themeArr = ["Spring", "Summer", "Autumn", "Winter"]
     var player:AVAudioPlayer?
+    var originButtonColor:UIColor!
+    var unEnabledButtonColor:UIColor!
     
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var pauseButton: UIButton!
     @IBOutlet weak var muteBotton: UIBarButtonItem!
+    @IBOutlet weak var background: UIImageView!
     
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        timeLabel.text = String(time)
+        
+        originButtonColor = startButton.currentTitleColor
+        unEnabledButtonColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1)
+        
+        pauseButton.isEnabled = false
+        pauseButton.setTitleColor(unEnabledButtonColor, for: UIControl.State.normal)
+        muteBotton.isEnabled = false
+        background.alpha = 0.3
+    }
+    
+//    func setButtonState(button:UIButton, state:Bool){
+//        if state{
+//
+//        }
+//    }
     
     
     @objc func UpdateTimer() {
-        time = time - 0.1
-        timeLabel.text = String(format: "%.1f", time)
+        time -= 0.1
+        if time <= 0.001{
+            timer.invalidate()
+            timeLabel.text = "0.0"
+            pauseButton.isEnabled = false
+            pauseButton.setTitleColor(unEnabledButtonColor, for: UIControl.State.normal)
+        }
+        else{
+            timeLabel.text = String(format: "%.1f", time)
+        }
+        
+        
     }
     
     @IBAction func startTimer(_ sender: Any) {
@@ -40,7 +72,9 @@ class TimerController: UIViewController {
             return
         }
         startButton.isEnabled = false
+        startButton.setTitleColor(unEnabledButtonColor, for: UIControl.State.normal)
         pauseButton.isEnabled = true
+        pauseButton.setTitleColor(originButtonColor, for: UIControl.State.normal)
             
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(TimerController.UpdateTimer), userInfo: nil, repeats: true)
         isCounting = true
@@ -48,22 +82,23 @@ class TimerController: UIViewController {
     
     @IBAction func pauseTimer(_ sender: Any) {
         startButton.isEnabled = true
+        startButton.setTitleColor(originButtonColor, for: UIControl.State.normal)
         pauseButton.isEnabled = false
+        pauseButton.setTitleColor(unEnabledButtonColor, for: UIControl.State.normal)
             
         timer.invalidate()
         isCounting = false
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        timeLabel.text = String(time)
-        pauseButton.isEnabled = false
-        muteBotton.isEnabled = false
-
-    }
     
     @IBAction func done(_ sender: Any) {
         delegate?.didUpdateTime(time: Int(time))
+        if let player = player{
+            if player.isPlaying{
+                player.stop()
+            }
+        }
+        
         navigationController?.popViewController(animated: true)
     }
     
@@ -83,6 +118,7 @@ class TimerController: UIViewController {
         muteBotton.isEnabled = true
         changeTheme()
         changeMusic()
+        changeBackground()
         
         i = i >= themeArr.count-1 ? 0 : i+1
     }
@@ -137,6 +173,32 @@ class TimerController: UIViewController {
         }catch{
             print(error)
         }
+    }
+    
+    
+    func changeBackground(){
+//        background.image = UIImage(named: themeArr[i])
+        let temp = UIImageView(frame: background.frame)
+        temp.contentMode = .scaleAspectFill
+        temp.image = UIImage(named: themeArr[i])
+        temp.transform = CGAffineTransform(translationX: 100, y: 0)
+        temp.alpha = 0
+        view.insertSubview(temp, aboveSubview: background)
+        
+        UIView.animate(withDuration: 0.5) {
+            self.background.transform = CGAffineTransform(translationX: 100, y: 0)
+            self.background.alpha = 0
+            temp.alpha = 0.3
+            temp.transform = .identity
+        } completion: { _ in
+            self.background.image = temp.image
+            self.background.alpha = 0.3
+            self.background.transform = .identity
+            temp.removeFromSuperview()
+        }
+
+        
+        
     }
     
     
