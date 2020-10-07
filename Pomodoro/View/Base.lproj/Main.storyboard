@@ -215,13 +215,21 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="qIt-fl-EF0">
-                        <barButtonItem key="rightBarButtonItem" title="Done" id="2Vg-yv-Bev">
-                            <connections>
-                                <action selector="done:" destination="Hcv-Mi-yoV" id="afz-FK-mrI"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Done" id="2Vg-yv-Bev">
+                                <connections>
+                                    <action selector="done:" destination="Hcv-Mi-yoV" id="afz-FK-mrI"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Mute" id="yFb-ff-8gw">
+                                <connections>
+                                    <action selector="mute:" destination="Hcv-Mi-yoV" id="p0f-5z-WU6"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="muteBotton" destination="yFb-ff-8gw" id="sWF-qr-Kse"/>
                         <outlet property="pauseButton" destination="L8M-tT-dsW" id="Gh8-XB-DwB"/>
                         <outlet property="startButton" destination="NyT-i8-M6i" id="8Ys-mG-lQQ"/>
                         <outlet property="timeLabel" destination="Sda-1S-e3O" id="Z9C-EP-R1d"/>

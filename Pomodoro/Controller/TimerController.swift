@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 protocol TimerDelegate {
     func didUpdateTime(time:Int)
@@ -16,15 +17,18 @@ class TimerController: UIViewController {
     
     var time = 0.0
     var timer = Timer()
-    var isPlaying = false
+    var isCounting = false
     var delegate:TimerDelegate?
     var i = 0
     let themeArr = ["Spring", "Summer", "Autumn", "Winter"]
-    
+    var player:AVAudioPlayer?
     
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var pauseButton: UIButton!
+    @IBOutlet weak var muteBotton: UIBarButtonItem!
+    
+    
     
     @objc func UpdateTimer() {
         time = time - 0.1
@@ -32,14 +36,14 @@ class TimerController: UIViewController {
     }
     
     @IBAction func startTimer(_ sender: Any) {
-        if(isPlaying) {
+        if(isCounting) {
             return
         }
         startButton.isEnabled = false
         pauseButton.isEnabled = true
             
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(TimerController.UpdateTimer), userInfo: nil, repeats: true)
-        isPlaying = true
+        isCounting = true
     }
     
     @IBAction func pauseTimer(_ sender: Any) {
@@ -47,13 +51,14 @@ class TimerController: UIViewController {
         pauseButton.isEnabled = false
             
         timer.invalidate()
-        isPlaying = false
+        isCounting = false
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         timeLabel.text = String(time)
         pauseButton.isEnabled = false
+        muteBotton.isEnabled = false
 
     }
     
@@ -62,9 +67,22 @@ class TimerController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
+    @IBAction func mute(_ sender: Any) {
+        if player!.isPlaying{
+            player!.stop()
+            muteBotton.title = "Unmute"
+        }
+        else{
+            player!.play()
+            muteBotton.title = "Mute"
+        }
+        
+    }
     
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        muteBotton.isEnabled = true
         changeTheme()
+        changeMusic()
         
         i = i >= themeArr.count-1 ? 0 : i+1
     }
@@ -108,6 +126,19 @@ class TimerController: UIViewController {
             themeLabel.removeFromSuperview()
         }
     }
+    
+    
+    func changeMusic(){
+        let url = Bundle.main.url(forResource: themeArr[i], withExtension: "mp3")
+        do{
+            player = try AVAudioPlayer(contentsOf: url!)
+            player!.numberOfLoops = -1
+            player!.play()
+        }catch{
+            print(error)
+        }
+    }
+    
     
     /*
     // MARK: - Navigation

@@ -11,6 +11,10 @@
 		986BEF7E252C439F007D3F1B /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986BEF7D252C439F007D3F1B /* Data.swift */; };
 		986BEF81252C43B1007D3F1B /* EditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986BEF80252C43B1007D3F1B /* EditController.swift */; };
 		986BEF85252D5D29007D3F1B /* TimerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986BEF84252D5D29007D3F1B /* TimerController.swift */; };
+		986BEFCD252DD623007D3F1B /* Spring.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 986BEFC9252DD623007D3F1B /* Spring.mp3 */; };
+		986BEFCE252DD623007D3F1B /* Winter.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 986BEFCA252DD623007D3F1B /* Winter.mp3 */; };
+		986BEFD4252DDE10007D3F1B /* Summer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 986BEFD2252DDE10007D3F1B /* Summer.mp3 */; };
+		986BEFD5252DDE10007D3F1B /* Autumn.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 986BEFD3252DDE10007D3F1B /* Autumn.mp3 */; };
 		98AA65B22524598100AAC703 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AA65B12524598100AAC703 /* AppDelegate.swift */; };
 		98AA65B42524598100AAC703 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AA65B32524598100AAC703 /* SceneDelegate.swift */; };
 		98AA65B92524598100AAC703 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98AA65B72524598100AAC703 /* Main.storyboard */; };
@@ -27,6 +31,10 @@
 		986BEF7D252C439F007D3F1B /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		986BEF80252C43B1007D3F1B /* EditController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditController.swift; sourceTree = "<group>"; };
 		986BEF84252D5D29007D3F1B /* TimerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerController.swift; sourceTree = "<group>"; };
+		986BEFC9252DD623007D3F1B /* Spring.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Spring.mp3; sourceTree = "<group>"; };
+		986BEFCA252DD623007D3F1B /* Winter.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Winter.mp3; sourceTree = "<group>"; };
+		986BEFD2252DDE10007D3F1B /* Summer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Summer.mp3; sourceTree = "<group>"; };
+		986BEFD3252DDE10007D3F1B /* Autumn.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Autumn.mp3; sourceTree = "<group>"; };
 		98AA65AE2524598100AAC703 /* Pomodoro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pomodoro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98AA65B12524598100AAC703 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98AA65B32524598100AAC703 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -50,6 +58,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		986BEFC8252DD5E5007D3F1B /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				986BEFD3252DDE10007D3F1B /* Autumn.mp3 */,
+				986BEFD2252DDE10007D3F1B /* Summer.mp3 */,
+				986BEFC9252DD623007D3F1B /* Spring.mp3 */,
+				986BEFCA252DD623007D3F1B /* Winter.mp3 */,
+			);
+			path = Music;
+			sourceTree = "<group>";
+		};
 		98AA65A52524598100AAC703 = {
 			isa = PBXGroup;
 			children = (
@@ -71,6 +90,7 @@
 		98AA65B02524598100AAC703 /* Pomodoro */ = {
 			isa = PBXGroup;
 			children = (
+				986BEFC8252DD5E5007D3F1B /* Music */,
 				98AA65CA252459C600AAC703 /* Model */,
 				98AA65C62524599D00AAC703 /* Controller */,
 				98AA65C8252459A800AAC703 /* View */,
@@ -187,8 +207,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				98AA65BE2524598300AAC703 /* LaunchScreen.storyboard in Resources */,
+				986BEFD4252DDE10007D3F1B /* Summer.mp3 in Resources */,
+				986BEFCE252DD623007D3F1B /* Winter.mp3 in Resources */,
+				986BEFD5252DDE10007D3F1B /* Autumn.mp3 in Resources */,
 				98AA65BB2524598300AAC703 /* Assets.xcassets in Resources */,
 				98AA65B92524598100AAC703 /* Main.storyboard in Resources */,
+				986BEFCD252DD623007D3F1B /* Spring.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
