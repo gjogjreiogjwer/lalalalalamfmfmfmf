@@ -45,11 +45,17 @@ class TimerController: UIViewController {
         background.alpha = 0.3
     }
     
-//    func setButtonState(button:UIButton, state:Bool){
-//        if state{
-//
-//        }
-//    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if self.isMovingFromParent{
+            if let player = player{
+                if player.isPlaying{
+                    player.stop()
+                }
+            }
+        }
+    }
     
     
     @objc func UpdateTimer() {
