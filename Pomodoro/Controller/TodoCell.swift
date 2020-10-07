@@ -11,6 +11,8 @@ class TodoCell: UITableViewCell {
 
     
     @IBOutlet weak var todo: UILabel!
+    @IBOutlet weak var leftTime: UILabel!
+    
     
     
     override func awakeFromNib() {

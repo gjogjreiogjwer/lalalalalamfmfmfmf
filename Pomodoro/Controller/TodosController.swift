@@ -6,8 +6,13 @@
 //
 
 import UIKit
+import RealmSwift
 
 class TodosController: UITableViewController {
+    
+    var row = 0
+    var datas: Results<Data>?
+    let realm = try! Realm()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,9 +21,29 @@ class TodosController: UITableViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+//        self.navigationItem.leftBarButtonItem = self.editButtonItem
+        
+        datas = realm.objects(Data.self)
+    }
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        editButtonItem.title = isEditing ? "Done" : "Edit"
     }
 
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        do{
+            try realm.write{
+                realm.delete(datas![indexPath.row])
+            }
+        }catch{
+            print(error)
+        }
+        tableView.reloadData()
+    }
+    
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -28,17 +53,21 @@ class TodosController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 1
+        return datas?.count ?? 0
     }
 
   
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "todo", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "todo", for: indexPath) as! TodoCell
 
-        // Configure the cell...
-
+        if let datas = datas{
+            cell.todo.text = datas[indexPath.row].name
+            cell.leftTime.text = String(datas[indexPath.row].leftTime)
+        }
         return cell
     }
+    
+  
    
 
     /*
@@ -76,14 +105,94 @@ class TodosController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "addTodo"{
+            let vc = segue.destination as! EditController
+            vc.delegate = self
+        }
+        else if segue.identifier == "editTodo"{
+            let vc = segue.destination as! EditController
+            let cell = sender as! TodoCell
+            row = tableView.indexPath(for: cell)!.row
+            vc.name = datas?[row].name
+            vc.time = datas?[row].leftTime
+            vc.delegate = self
+        }
+        else if segue.identifier == "timer"{
+            let vc = segue.destination as! TimerController
+            let cell = sender as! TodoCell
+            row = tableView.indexPath(for: cell)!.row
+            vc.time = Double(datas?[row].leftTime ?? 30)
+            vc.delegate = self
+            
+        }
     }
-    */
+}
 
+extension TodosController: TodoDelegate, TimerDelegate, UISearchBarDelegate{
+    
+    func saveData(data:Data){
+        do{
+            try realm.write{
+                realm.add(data)
+            }
+        }catch{
+            print(error)
+        }
+    }
+    
+    
+    func didAdd(name: String, time: Int) {
+        let data = Data()
+        data.name = name
+        data.leftTime = time
+        saveData(data: data)
+        tableView.reloadData()
+    }
+    
+    func didEdit(name:String, time: Int){
+        do{
+            try realm.write{
+                datas![row].name = name
+                datas![row].leftTime = time
+            }
+        }catch{
+            print(error)
+        }
+        tableView.reloadData()
+    }
+    
+    
+    func didUpdateTime(time: Int) {
+        do{
+            try realm.write{
+                datas![row].leftTime = time
+            }
+        }catch{
+            print(error)
+        }
+        tableView.reloadData()
+    }
+    
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        datas = realm.objects(Data.self).filter("name CONTAINS %@", searchBar.text!).sorted(byKeyPath: "leftTime", ascending: false)
+        tableView.reloadData()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text!.isEmpty{
+            datas = realm.objects(Data.self)
+            tableView.reloadData()
+            DispatchQueue.main.async {
+                searchBar.resignFirstResponder()
+            }
+        }
+    }
 }
