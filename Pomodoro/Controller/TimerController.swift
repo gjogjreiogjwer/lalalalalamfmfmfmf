@@ -35,8 +35,8 @@ class TimerController: UIViewController {
     @IBOutlet weak var background: UIImageView!
     
     deinit {
-            NotificationCenter.default.removeObserver(self)
-        }
+        NotificationCenter.default.removeObserver(self)
+    }
     
     
     override func viewDidLoad() {
@@ -53,11 +53,23 @@ class TimerController: UIViewController {
         
         //开启距离传感器功能
         UIDevice.current.isProximityMonitoringEnabled = true
-                
        //监听物体开进或离开设备的通知
        NotificationCenter.default.addObserver(self, selector:#selector(statusChange), name: UIDevice.proximityStateDidChangeNotification, object: nil)
         
         progressInit()
+    }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if self.isMovingFromParent{
+            if let player = player{
+                if player.isPlaying{
+                    player.stop()
+                }
+            }
+        }
     }
     
     func progressInit(){
@@ -76,18 +88,7 @@ class TimerController: UIViewController {
     }
     
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        if self.isMovingFromParent{
-            if let player = player{
-                if player.isPlaying{
-                    player.stop()
-                }
-            }
-        }
-    }
-    
+    // MARK: - Timer
     
     @objc func UpdateTimer() {
         time -= 0.1
@@ -100,9 +101,8 @@ class TimerController: UIViewController {
         else{
             timeLabel.text = String(format: "%.1f", time)
         }
-        
-        
     }
+    
     
     @IBAction func startTimer(_ sender: Any) {
         if(isCounting) {
@@ -116,7 +116,6 @@ class TimerController: UIViewController {
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(TimerController.UpdateTimer), userInfo: nil, repeats: true)
         isCounting = true
         
-        
         progress.animate(fromAngle: progress.angle, toAngle: 360, duration: time) { completed in
             if completed {
                 print("animation stopped, completed")
@@ -125,6 +124,7 @@ class TimerController: UIViewController {
             }
         }
     }
+    
     
     @IBAction func pauseTimer(_ sender: Any) {
         startButton.isEnabled = true
@@ -139,14 +139,10 @@ class TimerController: UIViewController {
     }
     
     
+    // MARK: - Actions
+    
     @IBAction func done(_ sender: Any) {
         delegate?.didUpdateTime(time: Int(time))
-//        if let player = player{
-//            if player.isPlaying{
-//                player.stop()
-//            }
-//        }
-//
         navigationController?.popViewController(animated: true)
     }
     
@@ -167,7 +163,6 @@ class TimerController: UIViewController {
         changeTheme()
         changeMusic()
         changeBackground()
-        
         i = i >= themeArr.count-1 ? 0 : i+1
     }
     
@@ -244,15 +239,14 @@ class TimerController: UIViewController {
             self.background.transform = .identity
             temp.removeFromSuperview()
         }
-
-        
-        
     }
+    
+    
+    // MARK: - distance sentor
     
     /// 这个主要在 手机上方，电话听筒有相应  = =  下面没得反应
     @objc func statusChange(){
         //获取当前是否有物体靠近设备
-         
         if UIDevice.current.proximityState {
             //靠近了
             startTimer(Any.self)
@@ -263,16 +257,4 @@ class TimerController: UIViewController {
             print("远离了")
         }
     }
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
