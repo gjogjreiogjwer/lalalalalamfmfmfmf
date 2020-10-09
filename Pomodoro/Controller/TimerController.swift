@@ -7,6 +7,8 @@
 
 import UIKit
 import AVFoundation
+import KDCircularProgress
+
 
 protocol TimerDelegate {
     func didUpdateTime(time:Int)
@@ -24,6 +26,7 @@ class TimerController: UIViewController {
     var player:AVAudioPlayer?
     var originButtonColor:UIColor!
     var unEnabledButtonColor:UIColor!
+    var progress:KDCircularProgress!
     
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var startButton: UIButton!
@@ -37,13 +40,31 @@ class TimerController: UIViewController {
         timeLabel.text = String(time)
         
         originButtonColor = startButton.currentTitleColor
-        unEnabledButtonColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1)
+        unEnabledButtonColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         
         pauseButton.isEnabled = false
         pauseButton.setTitleColor(unEnabledButtonColor, for: UIControl.State.normal)
         muteBotton.isEnabled = false
         background.alpha = 0.3
+        
+        progressInit()
     }
+    
+    func progressInit(){
+        progress = KDCircularProgress(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
+        progress.startAngle = -90
+        progress.progressThickness = 0.1
+        progress.trackThickness = 0.2
+        progress.clockwise = true
+        progress.roundedCorners = true
+        progress.glowMode = .forward
+        progress.glowAmount = 0.9
+        progress.set(colors: UIColor.cyan)
+        progress.trackColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        progress.center = CGPoint(x: view.center.x, y: view.center.y)
+        view.addSubview(progress)
+    }
+    
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -84,6 +105,15 @@ class TimerController: UIViewController {
             
         timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(TimerController.UpdateTimer), userInfo: nil, repeats: true)
         isCounting = true
+        
+        
+        progress.animate(fromAngle: progress.angle, toAngle: 360, duration: time) { completed in
+            if completed {
+                print("animation stopped, completed")
+            } else {
+                print("animation stopped, was interrupted")
+            }
+        }
     }
     
     @IBAction func pauseTimer(_ sender: Any) {
@@ -94,17 +124,19 @@ class TimerController: UIViewController {
             
         timer.invalidate()
         isCounting = false
+        
+        progress.pauseAnimation()
     }
     
     
     @IBAction func done(_ sender: Any) {
         delegate?.didUpdateTime(time: Int(time))
-        if let player = player{
-            if player.isPlaying{
-                player.stop()
-            }
-        }
-        
+//        if let player = player{
+//            if player.isPlaying{
+//                player.stop()
+//            }
+//        }
+//        
         navigationController?.popViewController(animated: true)
     }
     

@@ -37,10 +37,10 @@ class EditController: UITableViewController {
     @IBAction func done(_ sender: Any) {
         if !todoInput.text!.isEmpty{
             if self.name != nil{
-                delegate?.didEdit(name: todoInput.text!, time:Int(timeInput.text!) ?? 30)
+                delegate?.didEdit(name: todoInput.text!, time:Int(timeInput.text!)!)
             }
             else{
-                delegate?.didAdd(name: todoInput.text!, time:Int(timeInput.text!) ?? 30)
+                delegate?.didAdd(name: todoInput.text!, time:Int(timeInput.text!)!)
             }
         }
         navigationController?.popViewController(animated: true)

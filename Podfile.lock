@@ -1,4 +1,5 @@
 PODS:
+  - KDCircularProgress (1.5.4)
   - Realm (5.4.5):
     - Realm/Headers (= 5.4.5)
   - Realm/Headers (5.4.5)
@@ -6,17 +7,21 @@ PODS:
     - Realm (= 5.4.5)
 
 DEPENDENCIES:
+  - KDCircularProgress
   - RealmSwift
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Realm
     - RealmSwift
+  trunk:
+    - KDCircularProgress
 
 SPEC CHECKSUMS:
+  KDCircularProgress: 98200c6b8e85d22bc04eb644721d3b1e12b0686b
   Realm: 155c60aec98b1044a05d676017be6900a9ee93b6
   RealmSwift: fa80dc70fa91f762c2bc3d09328da92214b36bbb
 
-PODFILE CHECKSUM: 166c6783da5e70713c518cb6288b78cfe4fb7071
+PODFILE CHECKSUM: a674d70af067b6f3e0de71809c2bf1c1b9983506
 
 COCOAPODS: 1.9.3
