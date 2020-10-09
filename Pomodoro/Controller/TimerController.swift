@@ -34,6 +34,10 @@ class TimerController: UIViewController {
     @IBOutlet weak var muteBotton: UIBarButtonItem!
     @IBOutlet weak var background: UIImageView!
     
+    deinit {
+            NotificationCenter.default.removeObserver(self)
+        }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +50,12 @@ class TimerController: UIViewController {
         pauseButton.setTitleColor(unEnabledButtonColor, for: UIControl.State.normal)
         muteBotton.isEnabled = false
         background.alpha = 0.3
+        
+        //开启距离传感器功能
+        UIDevice.current.isProximityMonitoringEnabled = true
+                
+       //监听物体开进或离开设备的通知
+       NotificationCenter.default.addObserver(self, selector:#selector(statusChange), name: UIDevice.proximityStateDidChangeNotification, object: nil)
         
         progressInit()
     }
@@ -136,7 +146,7 @@ class TimerController: UIViewController {
 //                player.stop()
 //            }
 //        }
-//        
+//
         navigationController?.popViewController(animated: true)
     }
     
@@ -237,6 +247,21 @@ class TimerController: UIViewController {
 
         
         
+    }
+    
+    /// 这个主要在 手机上方，电话听筒有相应  = =  下面没得反应
+    @objc func statusChange(){
+        //获取当前是否有物体靠近设备
+         
+        if UIDevice.current.proximityState {
+            //靠近了
+            startTimer(Any.self)
+            print("靠近了")
+        }else{
+            //远离了
+            pauseTimer((Any).self)
+            print("远离了")
+        }
     }
     
     
