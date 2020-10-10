@@ -13,7 +13,7 @@ protocol TodoDelegate {
 }
 
 
-class EditController: UITableViewController {
+class EditTableController: UITableViewController {
     
     var delegate:TodoDelegate?
     var name:String?

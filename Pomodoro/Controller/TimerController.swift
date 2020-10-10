@@ -28,6 +28,8 @@ class TimerController: UIViewController {
     var unEnabledButtonColor:UIColor!
     var progress:KDCircularProgress!
     
+    static var timerStyle = 0
+    
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var pauseButton: UIButton!
@@ -41,6 +43,7 @@ class TimerController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(TimerController.timerStyle)
         //Fixed in daytime mode
         overrideUserInterfaceStyle = .light
         
@@ -54,12 +57,17 @@ class TimerController: UIViewController {
         muteBotton.isEnabled = false
         background.alpha = 0.3
         
-        //开启距离传感器功能
-        UIDevice.current.isProximityMonitoringEnabled = true
-       //监听物体开进或离开设备的通知
-       NotificationCenter.default.addObserver(self, selector:#selector(statusChange), name: UIDevice.proximityStateDidChangeNotification, object: nil)
-        
         progressInit()
+        
+        if TimerController.timerStyle == 1{
+            startButton.isHidden = true
+            pauseButton.isHidden = true
+            
+            //开启距离传感器功能
+            UIDevice.current.isProximityMonitoringEnabled = true
+           //监听物体开进或离开设备的通知
+           NotificationCenter.default.addObserver(self, selector:#selector(statusChange), name: UIDevice.proximityStateDidChangeNotification, object: nil)
+        }
     }
     
     

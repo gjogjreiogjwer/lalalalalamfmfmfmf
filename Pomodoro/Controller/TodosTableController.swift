@@ -8,7 +8,7 @@
 import UIKit
 import RealmSwift
 
-class TodosController: UITableViewController {
+class TodosTableController: UITableViewController {
     
     var row = 0
     var datas: Results<Data>?
@@ -72,11 +72,11 @@ class TodosController: UITableViewController {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
         if segue.identifier == "addTodo"{
-            let vc = segue.destination as! EditController
+            let vc = segue.destination as! EditTableController
             vc.delegate = self
         }
         else if segue.identifier == "editTodo"{
-            let vc = segue.destination as! EditController
+            let vc = segue.destination as! EditTableController
             let cell = sender as! TodoCell
             row = tableView.indexPath(for: cell)!.row
             vc.name = datas?[row].name
@@ -96,7 +96,7 @@ class TodosController: UITableViewController {
 
 // MARK: - Database
 
-extension TodosController: TodoDelegate, TimerDelegate, UISearchBarDelegate{
+extension TodosTableController: TodoDelegate, TimerDelegate, UISearchBarDelegate{
     
     func saveData(data:Data){
         do{
