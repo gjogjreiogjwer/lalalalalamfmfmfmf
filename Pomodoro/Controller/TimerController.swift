@@ -77,11 +77,12 @@ class TimerController: UIViewController {
         progress.startAngle = -90
         progress.progressThickness = 0.1
         progress.trackThickness = 0.2
+        progress.gradientRotateSpeed = 2
         progress.clockwise = true
         progress.roundedCorners = true
         progress.glowMode = .forward
         progress.glowAmount = 0.9
-        progress.set(colors: UIColor.cyan)
+        progress.set(colors: UIColor.cyan ,UIColor.white)
         progress.trackColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         progress.center = CGPoint(x: view.center.x, y: view.center.y)
         view.addSubview(progress)
