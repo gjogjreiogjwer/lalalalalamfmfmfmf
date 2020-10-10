@@ -41,6 +41,9 @@ class TimerController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Fixed in daytime mode
+        overrideUserInterfaceStyle = .light
+        
         timeLabel.text = String(time)
         
         originButtonColor = startButton.currentTitleColor
