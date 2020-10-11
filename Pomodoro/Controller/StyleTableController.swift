@@ -52,6 +52,7 @@ class StyleTableController: UITableViewController {
         lastCell.accessoryType = .none
         lastCell = cell
         TimerController.timerStyle = indexPath.row
+        UserDefaults.standard.set(TimerController.timerStyle, forKey: "style")
         
         tableView.deselectRow(at: indexPath, animated: true)
     }

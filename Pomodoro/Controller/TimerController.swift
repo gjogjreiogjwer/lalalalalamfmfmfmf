@@ -43,7 +43,6 @@ class TimerController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(TimerController.timerStyle)
         //Fixed in daytime mode
         overrideUserInterfaceStyle = .light
         
@@ -59,6 +58,9 @@ class TimerController: UIViewController {
         
         progressInit()
         
+        TimerController.timerStyle = UserDefaults.standard.integer(forKey: "style")
+        print(TimerController.timerStyle)
+        
         if TimerController.timerStyle == 1{
             startButton.isHidden = true
             pauseButton.isHidden = true
@@ -68,6 +70,8 @@ class TimerController: UIViewController {
            //监听物体开进或离开设备的通知
            NotificationCenter.default.addObserver(self, selector:#selector(statusChange), name: UIDevice.proximityStateDidChangeNotification, object: nil)
         }
+        
+        
     }
     
     
