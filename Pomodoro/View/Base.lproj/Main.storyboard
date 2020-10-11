@@ -15,34 +15,14 @@
                     <view key="view" contentMode="scaleToFill" id="Oy9-sO-7ig">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7kN-Ba-dcU">
-                                <rect key="frame" x="176.66666666666666" y="366" width="61" height="72"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
-                                <state key="normal" title="list"/>
-                                <connections>
-                                    <segue destination="LQU-iu-WuA" kind="show" id="p8D-Dh-CMK"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4pV-pO-lLH">
-                                <rect key="frame" x="131" y="506" width="152" height="72"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
-                                <state key="normal" title="Setting"/>
-                                <connections>
-                                    <segue destination="npn-Wm-oh8" kind="show" id="NuV-jI-9Vk"/>
-                                </connections>
-                            </button>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Uy-Np-cNf"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="7kN-Ba-dcU" firstAttribute="centerX" secondItem="Oy9-sO-7ig" secondAttribute="centerX" id="3TD-zo-Wj5"/>
-                            <constraint firstItem="4pV-pO-lLH" firstAttribute="top" secondItem="7kN-Ba-dcU" secondAttribute="bottom" constant="68" id="DQF-BH-9OG"/>
-                            <constraint firstItem="6Uy-Np-cNf" firstAttribute="bottom" secondItem="7kN-Ba-dcU" secondAttribute="bottom" constant="298" id="KHf-Pg-bcj"/>
-                            <constraint firstItem="4pV-pO-lLH" firstAttribute="centerX" secondItem="Oy9-sO-7ig" secondAttribute="centerX" id="lXu-Rq-FLf"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="FMe-sI-gkq"/>
+                    <connections>
+                        <segue destination="npn-Wm-oh8" kind="show" identifier="Setting" id="m0x-y3-Z2H"/>
+                        <segue destination="LQU-iu-WuA" kind="show" identifier="List" id="AQ3-Jb-ALb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xbd-l6-XUU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

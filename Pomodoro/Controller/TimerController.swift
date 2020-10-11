@@ -121,6 +121,10 @@ class TimerController: UIViewController {
     
     
     @IBAction func startTimer(_ sender: Any) {
+        start()
+    }
+    
+    func start(){
         if(isCounting) {
             return
         }
@@ -143,6 +147,10 @@ class TimerController: UIViewController {
     
     
     @IBAction func pauseTimer(_ sender: Any) {
+        pause()
+    }
+    
+    func pause(){
         startButton.isEnabled = true
         startButton.setTitleColor(originButtonColor, for: UIControl.State.normal)
         pauseButton.isEnabled = false
@@ -265,11 +273,11 @@ class TimerController: UIViewController {
         //获取当前是否有物体靠近设备
         if UIDevice.current.proximityState {
             //靠近了
-            startTimer(Any.self)
+            start()
             print("靠近了")
         }else{
             //远离了
-            pauseTimer((Any).self)
+            pause()
             print("远离了")
         }
     }
