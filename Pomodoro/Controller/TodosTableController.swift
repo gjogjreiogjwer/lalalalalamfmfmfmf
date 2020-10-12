@@ -10,9 +10,9 @@ import RealmSwift
 
 class TodosTableController: UITableViewController {
     
-    var row = 0
-    var datas: Results<Data>?
-    let realm = try! Realm()
+    private var row = 0
+    private var datas: Results<Data>?
+    private let realm = try! Realm()
 
     
     // MARK: - override functions
@@ -98,7 +98,7 @@ class TodosTableController: UITableViewController {
 
 extension TodosTableController: TodoDelegate, TimerDelegate, UISearchBarDelegate{
     
-    func saveData(data:Data){
+    private func saveData(data:Data){
         do{
             try realm.write{
                 realm.add(data)

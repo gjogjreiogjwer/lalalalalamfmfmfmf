@@ -18,15 +18,16 @@ protocol TimerDelegate {
 class TimerController: UIViewController {
     
     var time = 0.0
-    var timer = Timer()
-    var isCounting = false
     var delegate:TimerDelegate?
-    var i = 0
-    let themeArr = ["Spring", "Summer", "Autumn", "Winter"]
-    var player:AVAudioPlayer?
-    var originButtonColor:UIColor!
-    var unEnabledButtonColor:UIColor!
-    var progress:KDCircularProgress!
+    
+    private var timer = Timer()
+    private var isCounting = false
+    private var i = 0
+    private let themeArr = ["Spring", "Summer", "Autumn", "Winter"]
+    private var player:AVAudioPlayer?
+    private var originButtonColor:UIColor!
+    private var unEnabledButtonColor:UIColor!
+    private var progress:KDCircularProgress!
     
     static var timerStyle = 0
     
@@ -87,7 +88,7 @@ class TimerController: UIViewController {
         }
     }
     
-    func progressInit(){
+    private func progressInit(){
         progress = KDCircularProgress(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
         progress.startAngle = -90
         progress.progressThickness = 0.1
@@ -124,7 +125,7 @@ class TimerController: UIViewController {
         start()
     }
     
-    func start(){
+    private func start(){
         if(isCounting) {
             return
         }
@@ -150,7 +151,7 @@ class TimerController: UIViewController {
         pause()
     }
     
-    func pause(){
+    private func pause(){
         startButton.isEnabled = true
         startButton.setTitleColor(originButtonColor, for: UIControl.State.normal)
         pauseButton.isEnabled = false
@@ -191,7 +192,7 @@ class TimerController: UIViewController {
     }
     
     
-    func changeTheme(){
+    private func changeTheme(){
         let themeLabel = UILabel()
 //        themeLabel.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.5)
         themeLabel.layer.cornerRadius = 5.0
@@ -231,7 +232,7 @@ class TimerController: UIViewController {
     }
     
     
-    func changeMusic(){
+    private func changeMusic(){
         let url = Bundle.main.url(forResource: themeArr[i], withExtension: "mp3")
         do{
             player = try AVAudioPlayer(contentsOf: url!)
@@ -243,7 +244,7 @@ class TimerController: UIViewController {
     }
     
     
-    func changeBackground(){
+    private func changeBackground(){
 //        background.image = UIImage(named: themeArr[i])
         let temp = UIImageView(frame: background.frame)
         temp.contentMode = .scaleAspectFill

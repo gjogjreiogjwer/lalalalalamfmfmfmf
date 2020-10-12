@@ -9,8 +9,8 @@ import UIKit
 
 class StyleTableController: UITableViewController {
     
-    let styles = ["Normal", "Flip", "Sound"]
-    var lastCell:StyleCell!
+    private let styles = ["Normal", "Flip", "Sound"]
+    private var lastCell:StyleCell!
 
     override func viewDidLoad() {
         super.viewDidLoad()

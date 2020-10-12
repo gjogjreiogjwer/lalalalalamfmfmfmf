@@ -9,12 +9,12 @@ import UIKit
 
 class MainMenuController: UIViewController {
     
-    let dict:[String:String] = ["List": "Each task can be added, deleted, edited, and queried. Moreover, each task takes different time to complete.", "Setting": "Timing mode selection and account management."]
-    var shadowView:UIView!
-    var subView:UIView!
-    var background:UIImageView!
-    var subViewTitle:UILabel!
-    var describe:UILabel!
+    private let dict:[String:String] = ["List": "Each task can be added, deleted, edited, and queried. Moreover, each task takes different time to complete.", "Setting": "Timing mode selection and account management."]
+    private var shadowView:UIView!
+    private var subView:UIView!
+    private var background:UIImageView!
+    private var subViewTitle:UILabel!
+    private var describe:UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +23,7 @@ class MainMenuController: UIViewController {
         jump(text: "Setting", offset: 0)
     }
     
-    func createShadowView(offset:Int){
+    private func createShadowView(offset:Int){
         shadowView = UIView()
         shadowView.frame.size.width = 380
         shadowView.frame.size.height = 180
@@ -37,7 +37,7 @@ class MainMenuController: UIViewController {
     }
     
     
-    func createSubView(){
+    private func createSubView(){
         subView = UIView()
         subView.contentMode = .scaleToFill
         subView.frame.size.width = shadowView.frame.width
@@ -49,7 +49,7 @@ class MainMenuController: UIViewController {
     }
     
     
-    func createBackground(){
+    private func createBackground(){
         background = UIImageView()
         background.contentMode = .scaleToFill
         background.image = UIImage(named: "purple")
@@ -62,7 +62,7 @@ class MainMenuController: UIViewController {
     }
     
     
-    func createTitleLabel(text:String){
+    private func createTitleLabel(text:String){
         subViewTitle = UILabel()
         subViewTitle.font = UIFont.boldSystemFont(ofSize: 40)
         subViewTitle.adjustsFontSizeToFitWidth=true
@@ -75,7 +75,7 @@ class MainMenuController: UIViewController {
     }
     
     
-    func createDescribeLabel(text:String){
+    private func createDescribeLabel(text:String){
         describe = UILabel()
         describe.font = UIFont.systemFont(ofSize: 20)
         describe.numberOfLines = 0
@@ -93,7 +93,7 @@ class MainMenuController: UIViewController {
     }
     
     
-    func jump(text:String, offset:Int){
+    private func jump(text:String, offset:Int){
         createShadowView(offset: offset)
         createSubView()
         createBackground()
