@@ -174,17 +174,18 @@ class TimerController: UIViewController {
     @IBAction func mute(_ sender: Any) {
         if player!.isPlaying{
             player!.stop()
-            muteBotton.title = "Unmute"
+            muteBotton.image = UIImage(systemName: "speaker.wave.3")
         }
         else{
             player!.play()
-            muteBotton.title = "Mute"
+            muteBotton.image = UIImage(systemName: "speaker.slash")
         }
         
     }
     
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         muteBotton.isEnabled = true
+        muteBotton.image = UIImage(systemName: "speaker.slash")
         changeTheme()
         changeMusic()
         changeBackground()

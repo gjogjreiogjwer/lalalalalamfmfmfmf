@@ -52,7 +52,7 @@ class MainMenuController: UIViewController {
     private func createBackground(){
         background = UIImageView()
         background.contentMode = .scaleToFill
-        background.image = UIImage(named: "purple")
+        background.image = UIImage(named: "Pinky")
         background.layer.cornerRadius = 20.0
         background.frame.size.width = subView.frame.width
         background.frame.size.height = subView.frame.height

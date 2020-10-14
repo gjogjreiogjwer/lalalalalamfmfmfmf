@@ -15,8 +15,19 @@
                     <view key="view" contentMode="scaleToFill" id="Oy9-sO-7ig">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Green" translatesAutoresizingMaskIntoConstraints="NO" id="rnW-hl-rEN">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Uy-Np-cNf"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="rnW-hl-rEN" firstAttribute="trailing" secondItem="6Uy-Np-cNf" secondAttribute="trailing" id="7Vi-Pu-Ovr"/>
+                            <constraint firstItem="rnW-hl-rEN" firstAttribute="leading" secondItem="6Uy-Np-cNf" secondAttribute="leading" id="Eex-F1-gVy"/>
+                            <constraint firstItem="rnW-hl-rEN" firstAttribute="bottom" secondItem="6Uy-Np-cNf" secondAttribute="bottom" id="Otq-XL-1oO"/>
+                            <constraint firstItem="rnW-hl-rEN" firstAttribute="top" secondItem="Oy9-sO-7ig" secondAttribute="top" id="UUa-Xx-KaH"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="FMe-sI-gkq"/>
                     <connections>
@@ -26,7 +37,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xbd-l6-XUU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1235" y="-702"/>
+            <point key="canvasLocation" x="1234.7826086956522" y="-702.71739130434787"/>
         </scene>
         <!--Setting-->
         <scene sceneID="BDC-Ec-xvB">
@@ -152,6 +163,7 @@
                         <searchBar key="tableHeaderView" contentMode="redraw" id="gVT-lB-69R">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <color key="tintColor" systemColor="linkColor"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
                                 <outlet property="delegate" destination="LQU-iu-WuA" id="vf5-XI-VeJ"/>
@@ -358,7 +370,7 @@
                                     <action selector="done:" destination="Hcv-Mi-yoV" id="afz-FK-mrI"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Mute" id="yFb-ff-8gw">
+                            <barButtonItem title="Mute" image="speaker.wave.3" catalog="system" id="yFb-ff-8gw">
                                 <connections>
                                     <action selector="mute:" destination="Hcv-Mi-yoV" id="p0f-5z-WU6"/>
                                 </connections>
@@ -400,6 +412,11 @@
         <segue reference="e4D-X6-0ex"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="Green" width="1440" height="900"/>
+        <image name="speaker.wave.3" catalog="system" width="128" height="86"/>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
