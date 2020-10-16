@@ -19,8 +19,19 @@ class MainMenuController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        TimerController.timerStyle = UserDefaults.standard.integer(forKey: "style")
+        
         jump(text: "List", offset: 200)
         jump(text: "Setting", offset: 0)
+    }
+    
+    
+    class func setBackground(currentView: UIView){
+        let background = UIImageView(frame: currentView.frame)
+        background.contentMode = .scaleAspectFill
+        background.image = UIImage(named: "Yeta")
+        background.alpha = 0.3
+        currentView.addSubview(background)
     }
     
     private func createShadowView(offset:Int){

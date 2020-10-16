@@ -20,9 +20,11 @@ class TodosTableController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         datas = realm.objects(Data.self)
-        tableView.backgroundColor = #colorLiteral(red: 0.9859362245, green: 0.8397918344, blue: 1, alpha: 1)
         
+        MainMenuController.setBackground(currentView: view)
     }
+    
+    
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
@@ -45,7 +47,6 @@ class TodosTableController: UITableViewController {
   
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "todo", for: indexPath) as! TodoCell
-        cell.backgroundColor = #colorLiteral(red: 0.9859362245, green: 0.8397918344, blue: 1, alpha: 1)
 
         if let datas = datas{
             cell.todo.text = datas[indexPath.row].name

@@ -9,12 +9,14 @@ import UIKit
 
 class StyleTableController: UITableViewController {
     
-    private let styles = ["Normal", "Flip", "Sound"]
+    private let styles = ["Normal", "Flip", "Microphone"]
     private var lastCell:StyleCell!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        MainMenuController.setBackground(currentView: view)
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 

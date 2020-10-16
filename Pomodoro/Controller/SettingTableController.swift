@@ -12,6 +12,8 @@ class SettingTableController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        MainMenuController.setBackground(currentView: view)
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 

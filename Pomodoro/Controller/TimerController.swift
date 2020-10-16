@@ -8,7 +8,9 @@
 import UIKit
 import AVFoundation
 import KDCircularProgress
-
+import Speech
+import Alamofire
+import SwiftyJSON
 
 protocol TimerDelegate {
     func didUpdateTime(time:Int)
@@ -28,6 +30,18 @@ class TimerController: UIViewController {
     private var originButtonColor:UIColor!
     private var unEnabledButtonColor:UIColor!
     private var progress:KDCircularProgress!
+    private var textView: UITextView?
+//    private let speakSentence = "I am your father"
+    private var flag = false
+    private var microOpen = false
+    private var audioSession: AVAudioSession?
+    private var quote = "stop"
+    private let quoteURL = "http://api.cervidae.com.au:8080/quotes"
+    
+    private let audioEngine = AVAudioEngine()
+    private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))!
+    private var request: SFSpeechAudioBufferRecognitionRequest?
+    private var task: SFSpeechRecognitionTask?
     
     static var timerStyle = 0
     
@@ -36,6 +50,7 @@ class TimerController: UIViewController {
     @IBOutlet weak var pauseButton: UIButton!
     @IBOutlet weak var muteBotton: UIBarButtonItem!
     @IBOutlet weak var background: UIImageView!
+    @IBOutlet weak var doneButton: UIBarButtonItem!
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -44,6 +59,9 @@ class TimerController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        audioSession = AVAudioSession.sharedInstance()
+        
         //Fixed in daytime mode
         overrideUserInterfaceStyle = .light
         
@@ -59,8 +77,8 @@ class TimerController: UIViewController {
         
         progressInit()
         
-        TimerController.timerStyle = UserDefaults.standard.integer(forKey: "style")
-        print(TimerController.timerStyle)
+        getQuote()
+        
         
         if TimerController.timerStyle == 1{
             startButton.isHidden = true
@@ -72,7 +90,15 @@ class TimerController: UIViewController {
            NotificationCenter.default.addObserver(self, selector:#selector(statusChange), name: UIDevice.proximityStateDidChangeNotification, object: nil)
         }
         
-        
+        pauseButton.isEnabled = false
+        SFSpeechRecognizer.requestAuthorization { (status) in
+            OperationQueue.main.addOperation {
+                switch status {
+                case .authorized: self.pauseButton.isEnabled = true
+                default: self.pauseButton.isEnabled = false
+                }
+            }
+        }
     }
     
     
@@ -84,6 +110,20 @@ class TimerController: UIViewController {
                 if player.isPlaying{
                     player.stop()
                 }
+            }
+        }
+    }
+    
+    
+    private func getQuote(){
+        AF.request(quoteURL, method: .get).responseJSON{
+            response in
+            if let json = response.value{
+                let message = JSON(json)
+                let temp = message["payload", "quote"].stringValue
+                print(temp)
+//                self.quote = temp[1..<temp.count-1]
+                self.quote = temp
             }
         }
     }
@@ -129,6 +169,7 @@ class TimerController: UIViewController {
         if(isCounting) {
             return
         }
+        doneButton.isEnabled = false
         startButton.isEnabled = false
         startButton.setTitleColor(unEnabledButtonColor, for: UIControl.State.normal)
         pauseButton.isEnabled = true
@@ -149,9 +190,22 @@ class TimerController: UIViewController {
     
     @IBAction func pauseTimer(_ sender: Any) {
         pause()
+        if TimerController.timerStyle == 2{
+            if let player = player{
+                if player.isPlaying{
+                    player.pause()
+                    flag = true
+                }
+            }
+            startButton.isHidden = true
+            muteBotton.isEnabled = false
+            microphoneStyle()
+        }
     }
     
+    
     private func pause(){
+        doneButton.isEnabled = true
         startButton.isEnabled = true
         startButton.setTitleColor(originButtonColor, for: UIControl.State.normal)
         pauseButton.isEnabled = false
@@ -173,7 +227,7 @@ class TimerController: UIViewController {
     
     @IBAction func mute(_ sender: Any) {
         if player!.isPlaying{
-            player!.stop()
+            player!.pause()
             muteBotton.image = UIImage(systemName: "speaker.wave.3")
         }
         else{
@@ -184,12 +238,15 @@ class TimerController: UIViewController {
     }
     
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-        muteBotton.isEnabled = true
-        muteBotton.image = UIImage(systemName: "speaker.slash")
-        changeTheme()
-        changeMusic()
-        changeBackground()
-        i = i >= themeArr.count-1 ? 0 : i+1
+        if !microOpen{
+            muteBotton.isEnabled = true
+            muteBotton.image = UIImage(systemName: "speaker.slash")
+            changeTheme()
+            changeMusic()
+            changeBackground()
+            i = i >= themeArr.count-1 ? 0 : i+1
+        }
+        
     }
     
     
@@ -238,6 +295,7 @@ class TimerController: UIViewController {
         do{
             player = try AVAudioPlayer(contentsOf: url!)
             player!.numberOfLoops = -1
+            player!.prepareToPlay()
             player!.play()
         }catch{
             print(error)
@@ -283,4 +341,128 @@ class TimerController: UIViewController {
             print("远离了")
         }
     }
+    
+    
+    
+    // MARK: - Microphone style
+    
+    private func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
+        if available {
+            pauseButton.isEnabled = true
+        } else {
+            pauseButton.isEnabled = false
+        }
+    }
+    
+    
+    private func microphoneStyle(){
+        if audioEngine.isRunning {
+            microOpen = false
+            request?.endAudio()
+            audioEngine.inputNode.removeTap(onBus: 0)
+            audioEngine.stop()
+            //category切换回音乐模式
+            try? audioSession!.setCategory(AVAudioSession.Category.playback)
+            //mode从micro的最小化改成扬声器
+            try? audioSession!.setMode(AVAudioSession.Mode.moviePlayback)
+            if let textView = textView{
+                pauseButton.setTitle("Pause", for: .normal)
+                startButton.isHidden = false
+                if textView.text != quote{
+                    start()
+                }
+                textView.removeFromSuperview()
+                if let player = player{
+                    muteBotton.isEnabled = true
+                    if flag{
+                        player.play()
+                        flag = false
+                    }
+                }
+            }
+            getQuote()
+        }
+        else {
+            createTextView()
+            microOpen = true
+            pauseButton.isEnabled = true
+            pauseButton.setTitleColor(originButtonColor, for: UIControl.State.normal)
+            pauseButton.setTitle("Stop Recording", for: .normal)
+            startDictation()
+        }
+    }
+    
+    
+    private func createTextView(){
+        textView = UITextView()
+        textView!.layer.cornerRadius = 5.0
+        textView!.font = UIFont.systemFont(ofSize: 25)
+        textView!.frame.size.width = view.frame.width - 20
+        textView!.frame.size.height = 120
+        textView!.center.x = view.center.x
+        textView!.center.y = view.center.y - 210
+        textView!.alpha = 0.5
+        textView!.text = """
+            Please say the following sentence:
+            \(quote)
+            """
+        textView!.textAlignment = .center
+        view.addSubview(textView!)
+    }
+    
+    
+    private func startDictation() {
+        task?.cancel()
+        task = nil
+        // Initializes the request variable
+        request = SFSpeechAudioBufferRecognitionRequest()
+        // Assigns the shared audio session instance to a constant
+//        audioSession = AVAudioSession.sharedInstance()
+        // Assigns the input node of the audio engine to a constant
+        let inputNode = audioEngine.inputNode
+         // If possible, the request variable is unwrapped and assigned to a local constant
+        guard let request = request else { return }
+        request.shouldReportPartialResults = true
+        // Attempts to set various attributes and returns nil if fails
+        try? audioSession!.setCategory(AVAudioSession.Category.record)
+//        try? audioSession!.setCategory(AVAudioSession.Category.playAndRecord)
+        try? audioSession!.setMode(AVAudioSession.Mode.measurement)
+        try? audioSession!.setActive(true, options: .notifyOthersOnDeactivation)
+        
+
+        // Initializes the task with a recognition task
+        task = speechRecognizer.recognitionTask(with: request, resultHandler: { (result, error) in
+            guard let result = result else { return }
+            self.textView!.text = result.bestTranscription.formattedString
+            if error != nil || result.isFinal {
+                self.audioEngine.stop()
+                self.request = nil
+                self.task = nil
+                inputNode.removeTap(onBus: 0)
+            }
+        })
+        let recordingFormat = inputNode.inputFormat(forBus: 0)
+//        let recordingFormat = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 1)
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer, when) in
+            self.request?.append(buffer)
+        }
+        
+        audioEngine.prepare()
+        try? audioEngine.start()
+    }
+    
+ 
+}
+
+
+
+extension String {
+    subscript (r: Range<Int>) -> String {
+        get {
+            let startIndex = self.index(self.startIndex, offsetBy: r.lowerBound)
+            let endIndex = self.index(self.startIndex, offsetBy: r.upperBound)
+            return String(self[startIndex..<endIndex])
+        }
+    }
+    
 }

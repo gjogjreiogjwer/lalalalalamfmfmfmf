@@ -16,17 +16,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Green" translatesAutoresizingMaskIntoConstraints="NO" id="rnW-hl-rEN">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Margo" translatesAutoresizingMaskIntoConstraints="NO" id="2TB-2u-XCl">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Uy-Np-cNf"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="rnW-hl-rEN" firstAttribute="trailing" secondItem="6Uy-Np-cNf" secondAttribute="trailing" id="7Vi-Pu-Ovr"/>
-                            <constraint firstItem="rnW-hl-rEN" firstAttribute="leading" secondItem="6Uy-Np-cNf" secondAttribute="leading" id="Eex-F1-gVy"/>
-                            <constraint firstItem="rnW-hl-rEN" firstAttribute="bottom" secondItem="6Uy-Np-cNf" secondAttribute="bottom" id="Otq-XL-1oO"/>
-                            <constraint firstItem="rnW-hl-rEN" firstAttribute="top" secondItem="Oy9-sO-7ig" secondAttribute="top" id="UUa-Xx-KaH"/>
+                            <constraint firstItem="2TB-2u-XCl" firstAttribute="top" secondItem="Oy9-sO-7ig" secondAttribute="top" id="4vy-Gj-4r8"/>
+                            <constraint firstItem="2TB-2u-XCl" firstAttribute="trailing" secondItem="6Uy-Np-cNf" secondAttribute="trailing" id="kPx-xy-TeE"/>
+                            <constraint firstItem="2TB-2u-XCl" firstAttribute="bottom" secondItem="6Uy-Np-cNf" secondAttribute="bottom" id="raj-dv-ET4"/>
+                            <constraint firstItem="2TB-2u-XCl" firstAttribute="leading" secondItem="6Uy-Np-cNf" secondAttribute="leading" id="sAg-ee-9Q4"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="FMe-sI-gkq"/>
@@ -163,7 +163,6 @@
                         <searchBar key="tableHeaderView" contentMode="redraw" id="gVT-lB-69R">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <color key="tintColor" systemColor="linkColor"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
                                 <outlet property="delegate" destination="LQU-iu-WuA" id="vf5-XI-VeJ"/>
@@ -346,7 +345,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WLL-Qk-jSe">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Yeta" translatesAutoresizingMaskIntoConstraints="NO" id="WLL-Qk-jSe">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                             </imageView>
                         </subviews>
@@ -370,7 +369,7 @@
                                     <action selector="done:" destination="Hcv-Mi-yoV" id="afz-FK-mrI"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Mute" image="speaker.wave.3" catalog="system" id="yFb-ff-8gw">
+                            <barButtonItem image="speaker.wave.3" catalog="system" id="yFb-ff-8gw">
                                 <connections>
                                     <action selector="mute:" destination="Hcv-Mi-yoV" id="p0f-5z-WU6"/>
                                 </connections>
@@ -379,6 +378,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="background" destination="WLL-Qk-jSe" id="Zjw-Rt-IMT"/>
+                        <outlet property="doneButton" destination="2Vg-yv-Bev" id="fgt-m6-h1k"/>
                         <outlet property="muteBotton" destination="yFb-ff-8gw" id="sWF-qr-Kse"/>
                         <outlet property="pauseButton" destination="L8M-tT-dsW" id="Gh8-XB-DwB"/>
                         <outlet property="startButton" destination="NyT-i8-M6i" id="8Ys-mG-lQQ"/>
@@ -412,11 +412,9 @@
         <segue reference="e4D-X6-0ex"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="Green" width="1440" height="900"/>
+        <image name="Margo" width="1440" height="900"/>
+        <image name="Yeta" width="1440" height="900"/>
         <image name="speaker.wave.3" catalog="system" width="128" height="86"/>
-        <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

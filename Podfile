@@ -8,4 +8,6 @@ target 'Pomodoro' do
   # Pods for Pomodoro
   pod 'RealmSwift'
   pod 'KDCircularProgress'
+  pod 'Alamofire'
+  pod 'SwiftyJSON'
 end

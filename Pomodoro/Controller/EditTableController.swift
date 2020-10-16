@@ -25,6 +25,8 @@ class EditTableController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        MainMenuController.setBackground(currentView: view)
+        
         todoInput.becomeFirstResponder()
         todoInput.text = name
         timeInput.text = String(time ?? 30)
@@ -35,7 +37,7 @@ class EditTableController: UITableViewController {
     }
 
     @IBAction func done(_ sender: Any) {
-        if !todoInput.text!.isEmpty{
+        if !todoInput.text!.isEmpty, !timeInput.text!.isEmpty, Int(timeInput.text!) != nil{
             if self.name != nil{
                 delegate?.didEdit(name: todoInput.text!, time:Int(timeInput.text!)!)
             }

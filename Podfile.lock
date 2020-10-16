@@ -1,27 +1,35 @@
 PODS:
+  - Alamofire (5.2.2)
   - KDCircularProgress (1.5.4)
   - Realm (5.4.5):
     - Realm/Headers (= 5.4.5)
   - Realm/Headers (5.4.5)
   - RealmSwift (5.4.5):
     - Realm (= 5.4.5)
+  - SwiftyJSON (5.0.0)
 
 DEPENDENCIES:
+  - Alamofire
   - KDCircularProgress
   - RealmSwift
+  - SwiftyJSON
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Realm
     - RealmSwift
   trunk:
+    - Alamofire
     - KDCircularProgress
+    - SwiftyJSON
 
 SPEC CHECKSUMS:
+  Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
   KDCircularProgress: 98200c6b8e85d22bc04eb644721d3b1e12b0686b
   Realm: 155c60aec98b1044a05d676017be6900a9ee93b6
   RealmSwift: fa80dc70fa91f762c2bc3d09328da92214b36bbb
+  SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: a674d70af067b6f3e0de71809c2bf1c1b9983506
+PODFILE CHECKSUM: 0273f6d365f9b2d33cbb6fcce96112642c560866
 
 COCOAPODS: 1.9.3
