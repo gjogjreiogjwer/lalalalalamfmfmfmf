@@ -118,12 +118,12 @@ class MainMenuController: UIViewController {
         view.addSubview(shadowView)
 
         if text == "List"{
-            print(shadowView.frame)
+//            print(shadowView.frame)
             let tap = UITapGestureRecognizer(target: self, action:#selector(MainMenuController.handleTapToList(sender:)))
             shadowView.addGestureRecognizer(tap)
         }
         else if text == "Setting"{
-            print(shadowView.frame)
+//            print(shadowView.frame)
             let tap = UITapGestureRecognizer(target: self, action:#selector(MainMenuController.handleTapToSetting(sender:)))
             shadowView.addGestureRecognizer(tap)
         }

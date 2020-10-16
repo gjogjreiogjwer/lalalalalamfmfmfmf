@@ -8,17 +8,73 @@
 import UIKit
 
 class SettingTableController: UITableViewController {
+    
+    private let aboutUsInfo = """
+                    Group-W01/16-4
+                    
+                    Yicheng Jin
+                    ChongZheng Zhao
+                    Yuyang Wang
+                    Runfeng Du
+                    Tao Ge
+                    Shuai Mou
+                    """
 
+    @IBOutlet weak var aboutUsCell: UITableViewCell!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         MainMenuController.setBackground(currentView: view)
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        let tap = UITapGestureRecognizer(target: self, action:#selector(SettingTableController.handleTapToAboutUs(sender:)))
+        aboutUsCell.addGestureRecognizer(tap)
+    }
+    
+    
+    @objc func handleTapToAboutUs(sender:UITapGestureRecognizer) {
+        if sender.state == .ended{
+            showUs()
+        }
+    }
+    
+    
+    private func showUs(){
+        let info = UILabel()
+        info.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        info.alpha = 0.5
+        info.layer.cornerRadius = 5.0
+        info.font = UIFont.systemFont(ofSize: 23)
+        info.numberOfLines = 0
+        info.text = aboutUsInfo
+            
+            
+        info.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        info.textAlignment = .center
+        tableView.addSubview(info)
+        
+        info.frame.size.width = 280
+        info.frame.size.height = 250
+        info.center.x = tableView.center.x
+        info.center.y = tableView.frame.height + 200
+        
+        UIView.animate(withDuration: 1,
+                       delay: 0,
+                       usingSpringWithDamping: 0.4,
+                       initialSpringVelocity: 10,
+                       options: [],
+                       animations: {
+                        info.center.y -= 450
+                       },
+                       completion: nil)
+        
+        UIView.animate(withDuration: 0.5,
+                       delay: 2,
+                       options: .curveEaseIn) {
+            info.center.y += 450
+        } completion: { _ in
+            info.removeFromSuperview()
+        }
     }
 
     // MARK: - Table view data source
