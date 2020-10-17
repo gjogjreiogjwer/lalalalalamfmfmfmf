@@ -24,6 +24,7 @@ class TimerController: UIViewController {
     var delegate:TimerDelegate?
     
     private var timer = Timer()
+    private var learningTime = 0.0
     private var isCounting = false
     private var i = 0
     private let themeArr = ["Spring", "Summer", "Autumn", "Winter"]
@@ -154,12 +155,16 @@ class TimerController: UIViewController {
     
     @objc func UpdateTimer() {
         time -= 0.1
-        LoginController.currentScore += 0.1
+        learningTime += 0.1
         if time <= 0.001{
             timer.invalidate()
             timeLabel.text = "0.0"
             pauseButton.isEnabled = false
+            doneButton.isEnabled = true
             pauseButton.setTitleColor(unEnabledButtonColor, for: UIControl.State.normal)
+            changeMusic(musicFile: "Done", loop: 0)
+            
+            
         }
         else{
             timeLabel.text = String(format: "%.1f", time)
@@ -227,7 +232,8 @@ class TimerController: UIViewController {
     // MARK: - Actions
     
     @IBAction func done(_ sender: Any) {
-        let paras = ["username": LoginController.userName, "score": String(Int(LoginController.currentScore))]
+        LoginController.currentScore += learningTime
+        let paras = ["newScore": String(Int(LoginController.currentScore))]
         AF.request(updateURL, method: .post, parameters: paras).responseJSON{
             response in
             if let json = response.value{
@@ -262,7 +268,7 @@ class TimerController: UIViewController {
             muteBotton.isEnabled = true
             muteBotton.image = UIImage(systemName: "speaker.slash")
             changeTheme()
-            changeMusic()
+            changeMusic(musicFile: themeArr[i], loop: -1)
             changeBackground()
             i = i >= themeArr.count-1 ? 0 : i+1
         }
@@ -310,11 +316,11 @@ class TimerController: UIViewController {
     }
     
     
-    private func changeMusic(){
-        let url = Bundle.main.url(forResource: themeArr[i], withExtension: "mp3")
+    private func changeMusic(musicFile: String, loop: Int){
+        let url = Bundle.main.url(forResource: musicFile, withExtension: "mp3")
         do{
             player = try AVAudioPlayer(contentsOf: url!)
-            player!.numberOfLoops = -1
+            player!.numberOfLoops = loop
             player!.prepareToPlay()
             player!.play()
         }catch{

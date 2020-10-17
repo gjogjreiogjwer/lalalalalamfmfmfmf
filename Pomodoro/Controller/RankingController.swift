@@ -14,7 +14,7 @@ class RankingController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        overrideUserInterfaceStyle = .light
         MainMenuController.setBackground(currentView: view)
         showRankings()
 //        print(rankArr)

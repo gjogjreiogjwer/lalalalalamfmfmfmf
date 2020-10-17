@@ -35,11 +35,13 @@ class MainMenuController: UIViewController {
         jump(text: "Ranking", offset: 0)
         jump(text: "Setting", offset: -200)
         
-        getRankings()
+        
     }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        getRankings()
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
@@ -183,10 +185,13 @@ class MainMenuController: UIViewController {
             if let json = response.value{
                 let message = JSON(json)
                 if message["success"] == 1{
+                    self.rankArr = []
                     for i in 1...10{
                         let tempName = message["payload", "rankMap", String(i), "username"].stringValue
                         let tempScore = message["payload", "rankMap", String(i), "score"].stringValue
                         self.rankArr.append(["name": tempName, "score": tempScore])
+//                        print(message["payload", "rankMap", "2"])
+//                        print(self.rankArr)
                     }
                     
                     print("get ranks success")

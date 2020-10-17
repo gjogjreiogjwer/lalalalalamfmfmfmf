@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3F6614A020F6BB073214C823 /* Pods_Pomodoro.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A948DF208F6633B575A4BA4 /* Pods_Pomodoro.framework */; };
 		982FDFCE2539D8DE006961C2 /* RankingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982FDFCD2539D8DE006961C2 /* RankingController.swift */; };
+		984B94BC253B05C300EC78CE /* Done.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 984B94BB253B05C300EC78CE /* Done.mp3 */; };
 		986BEF7E252C439F007D3F1B /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986BEF7D252C439F007D3F1B /* Data.swift */; };
 		986BEF81252C43B1007D3F1B /* EditTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986BEF80252C43B1007D3F1B /* EditTableController.swift */; };
 		986BEF85252D5D29007D3F1B /* TimerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986BEF84252D5D29007D3F1B /* TimerController.swift */; };
@@ -37,6 +38,7 @@
 		6A948DF208F6633B575A4BA4 /* Pods_Pomodoro.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Pomodoro.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8723BCE8B3EE3FF412C9D043 /* Pods-Pomodoro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pomodoro.release.xcconfig"; path = "Target Support Files/Pods-Pomodoro/Pods-Pomodoro.release.xcconfig"; sourceTree = "<group>"; };
 		982FDFCD2539D8DE006961C2 /* RankingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingController.swift; sourceTree = "<group>"; };
+		984B94BB253B05C300EC78CE /* Done.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Done.mp3; sourceTree = "<group>"; };
 		986BEF7D252C439F007D3F1B /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		986BEF80252C43B1007D3F1B /* EditTableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditTableController.swift; sourceTree = "<group>"; };
 		986BEF84252D5D29007D3F1B /* TimerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerController.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 		986BEFC8252DD5E5007D3F1B /* Music */ = {
 			isa = PBXGroup;
 			children = (
+				984B94BB253B05C300EC78CE /* Done.mp3 */,
 				986BEFD3252DDE10007D3F1B /* Autumn.mp3 */,
 				986BEFD2252DDE10007D3F1B /* Summer.mp3 */,
 				986BEFC9252DD623007D3F1B /* Spring.mp3 */,
@@ -234,6 +237,7 @@
 				986BEFD4252DDE10007D3F1B /* Summer.mp3 in Resources */,
 				986BEFCE252DD623007D3F1B /* Winter.mp3 in Resources */,
 				986BEFD5252DDE10007D3F1B /* Autumn.mp3 in Resources */,
+				984B94BC253B05C300EC78CE /* Done.mp3 in Resources */,
 				98AA65BB2524598300AAC703 /* Assets.xcassets in Resources */,
 				98AA65B92524598100AAC703 /* Main.storyboard in Resources */,
 				986BEFCD252DD623007D3F1B /* Spring.mp3 in Resources */,
