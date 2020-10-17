@@ -6,23 +6,46 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class MainMenuController: UIViewController {
     
-    private let dict:[String:String] = ["List": "Each task can be added, deleted, edited, and queried. Moreover, each task takes different time to complete.", "Setting": "Timing mode selection and account management."]
+    private let dict:[String:String] = [
+        "List": "Each task can be added, deleted, edited, and queried. Moreover, each task takes different time to complete.",
+        "Setting": "Timing mode selection and account management.",
+        "Ranking": "Ranking of scores."]
     private var shadowView:UIView!
     private var subView:UIView!
     private var background:UIImageView!
     private var subViewTitle:UILabel!
     private var describe:UILabel!
+    private let rankingURL = "http://api.cervidae.com.au:8080/rankings?top=10&forced"
+//    private var rankings: JSON?
+    private var rankArr: [[String: String]] = []
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.navigationItem.hidesBackButton = true
+        
         TimerController.timerStyle = UserDefaults.standard.integer(forKey: "style")
         
         jump(text: "List", offset: 200)
-        jump(text: "Setting", offset: 0)
+        jump(text: "Ranking", offset: 0)
+        jump(text: "Setting", offset: -200)
+        
+        getRankings()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     
@@ -127,9 +150,12 @@ class MainMenuController: UIViewController {
             let tap = UITapGestureRecognizer(target: self, action:#selector(MainMenuController.handleTapToSetting(sender:)))
             shadowView.addGestureRecognizer(tap)
         }
-                                   
-        
+        else if text == "Ranking"{
+            let tap = UITapGestureRecognizer(target: self, action:#selector(MainMenuController.handleTapToRanking(sender:)))
+            shadowView.addGestureRecognizer(tap)
+        }
     }
+    
     
     @objc func handleTapToList(sender:UITapGestureRecognizer) {
         if sender.state == .ended{
@@ -144,15 +170,48 @@ class MainMenuController: UIViewController {
         }
     }
     
+    @objc func handleTapToRanking(sender:UITapGestureRecognizer) {
+        if sender.state == .ended{
+            performSegue(withIdentifier: "Ranking", sender: nil)
+        }
+    }
+    
+    
+    func getRankings(){
+        AF.request(rankingURL, method: .get).responseJSON{
+            response in
+            if let json = response.value{
+                let message = JSON(json)
+                if message["success"] == 1{
+                    for i in 1...10{
+                        let tempName = message["payload", "rankMap", String(i), "username"].stringValue
+                        let tempScore = message["payload", "rankMap", String(i), "score"].stringValue
+                        self.rankArr.append(["name": tempName, "score": tempScore])
+                    }
+                    
+                    print("get ranks success")
+                }
+                else{
+                    print("get ranks error")
+                }
+            }
+        }
+    }
+    
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "Ranking"{
+            let vc = segue.destination as! RankingController
+//            vc.rankings? = rankings!
+            vc.rankArr = rankArr
+        }
     }
-    */
+    
 
 }

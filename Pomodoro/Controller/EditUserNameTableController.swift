@@ -1,84 +1,62 @@
 //
-//  SettingController.swift
+//  EditUserNameTableController.swift
 //  Pomodoro
 //
-//  Created by 金一成 on 2020/10/10.
+//  Created by 金一成 on 2020/10/16.
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
-class SettingTableController: UITableViewController {
+class EditUserNameTableController: UITableViewController {
+
+    private let updateUserNameURL = "http://api.cervidae.com.au:8080/users"
     
-    private let aboutUsInfo = """
-                    Group-W01/16-4
-                    
-                    Yicheng Jin
-                    ChongZheng Zhao
-                    Yuyang Wang
-                    Runfeng Du
-                    Tao Ge
-                    Shuai Mou
-                    """
-
-    @IBOutlet weak var aboutUsCell: UITableViewCell!
+    @IBOutlet weak var editNameInput: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         MainMenuController.setBackground(currentView: view)
         
-        let tap = UITapGestureRecognizer(target: self, action:#selector(SettingTableController.handleTapToAboutUs(sender:)))
-        aboutUsCell.addGestureRecognizer(tap)
+        editNameInput.becomeFirstResponder()
+
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
+
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(EditUserNameTableController.done(sender:)))
+         self.navigationItem.rightBarButtonItem = doneButton
     }
     
-    
-    @objc func handleTapToAboutUs(sender:UITapGestureRecognizer) {
-        if sender.state == .ended{
-            showUs()
+    @objc func done(sender: Any){
+        if !editNameInput.text!.isEmpty{
+            LoginController.userName = editNameInput.text!
+            updateUserName(newName: LoginController.userName)
         }
+        navigationController?.popViewController(animated: true)
     }
     
     
-    private func showUs(){
-        let info = UILabel()
-        info.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        info.alpha = 0.5
-        info.layer.cornerRadius = 5.0
-        info.font = UIFont.systemFont(ofSize: 23)
-        info.numberOfLines = 0
-        info.text = aboutUsInfo
-            
-        info.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        info.textAlignment = .center
-        tableView.addSubview(info)
-        
-        info.frame.size.width = 280
-        info.frame.size.height = 250
-        info.center.x = tableView.center.x
-        info.center.y = tableView.frame.height + 200
-        
-        UIView.animate(withDuration: 1,
-                       delay: 0,
-                       usingSpringWithDamping: 0.4,
-                       initialSpringVelocity: 10,
-                       options: [],
-                       animations: {
-                        info.center.y -= 450
-                       },
-                       completion: nil)
-        
-        UIView.animate(withDuration: 0.5,
-                       delay: 2,
-                       options: .curveEaseIn) {
-            info.center.y += 450
-        } completion: { _ in
-            info.removeFromSuperview()
+    func updateUserName(newName: String){
+        let paras = ["username": newName, "score": String(Int(LoginController.currentScore))]
+        AF.request(updateUserNameURL, method: .post, parameters: paras).responseJSON{
+            response in
+            if let json = response.value{
+                let message = JSON(json)
+                if message["success"] == 1{
+                    print("update name success")
+                    print(message)
+                }
+                else{
+                    print("update name error")
+                }
+            }
         }
     }
 
-    // MARK: - Table view data source
-
-   
+  
 
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

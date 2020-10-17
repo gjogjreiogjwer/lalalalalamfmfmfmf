@@ -20,6 +20,7 @@ protocol TimerDelegate {
 class TimerController: UIViewController {
     
     var time = 0.0
+//    private var learningTime = 0.0
     var delegate:TimerDelegate?
     
     private var timer = Timer()
@@ -35,8 +36,10 @@ class TimerController: UIViewController {
     private var flag = false
     private var microOpen = false
     private var audioSession: AVAudioSession?
-    private var quote = "stop"
+    private var quote = "Stop"
     private let quoteURL = "http://api.cervidae.com.au:8080/quotes"
+    private let updateURL = "http://api.cervidae.com.au:8080/users/"
+    
     
     private let audioEngine = AVAudioEngine()
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))!
@@ -77,7 +80,9 @@ class TimerController: UIViewController {
         
         progressInit()
         
-        getQuote()
+        if TimerController.timerStyle == 2{
+            getQuote()
+        }
         
         
         if TimerController.timerStyle == 1{
@@ -149,6 +154,7 @@ class TimerController: UIViewController {
     
     @objc func UpdateTimer() {
         time -= 0.1
+        LoginController.currentScore += 0.1
         if time <= 0.001{
             timer.invalidate()
             timeLabel.text = "0.0"
@@ -221,6 +227,20 @@ class TimerController: UIViewController {
     // MARK: - Actions
     
     @IBAction func done(_ sender: Any) {
+        let paras = ["username": LoginController.userName, "score": String(Int(LoginController.currentScore))]
+        AF.request(updateURL, method: .post, parameters: paras).responseJSON{
+            response in
+            if let json = response.value{
+                let message = JSON(json)
+                if message["success"] == 1{
+                    print("update success")
+                }
+                else{
+                    print("update error")
+                }
+            }
+        }
+        
         delegate?.didUpdateTime(time: Int(time))
         navigationController?.popViewController(animated: true)
     }
