@@ -253,7 +253,7 @@
                             <outlet property="delegate" destination="LfG-wR-Ic8" id="fFd-5C-EmS"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Account" id="Bnt-zK-EQV"/>
+                    <navigationItem key="navigationItem" title="Account" largeTitleDisplayMode="never" id="Bnt-zK-EQV"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="accountNameLabel" destination="pSa-AP-ny4" id="zsT-xP-o8S"/>
@@ -350,7 +350,7 @@
                             <outlet property="delegate" destination="npn-Wm-oh8" id="dbW-aj-Uhv"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Setting" largeTitleDisplayMode="never" id="YDX-2A-4yp"/>
+                    <navigationItem key="navigationItem" title="Setting" largeTitleDisplayMode="always" id="YDX-2A-4yp"/>
                     <connections>
                         <outlet property="aboutUsCell" destination="J1h-9F-Rbf" id="jei-0p-Gm9"/>
                     </connections>
@@ -398,7 +398,7 @@
                             <outlet property="delegate" destination="5zM-lt-Drf" id="soO-HT-IUw"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Style" id="2gM-Mg-JcY"/>
+                    <navigationItem key="navigationItem" title="Style" largeTitleDisplayMode="never" id="2gM-Mg-JcY"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EnL-MA-3wL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -414,7 +414,7 @@
                         <viewLayoutGuide key="safeArea" id="h3q-A1-oiU"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="8v6-0W-4gf"/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="8v6-0W-4gf"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yaT-QU-37e" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
