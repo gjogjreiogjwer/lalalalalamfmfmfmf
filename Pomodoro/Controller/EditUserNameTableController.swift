@@ -18,7 +18,7 @@ class EditUserNameTableController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        MainMenuController.setBackground(currentView: view)
+        MainCollectionController.setBackground(currentView: view)
         
         editNameInput.becomeFirstResponder()
 

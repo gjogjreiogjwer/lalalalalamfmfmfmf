@@ -7,21 +7,35 @@
 
 import UIKit
 
+//protocol StyleDelegate{
+//    func updateDescribe(style: Int)
+//}
+
 class StyleTableController: UITableViewController {
+    
+    var describe: UILabel = UILabel()
     
     private let styles = ["Normal", "Flip", "Microphone"]
     private var lastCell:StyleCell!
+//    var delegate:StyleDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        MainMenuController.setBackground(currentView: view)
+        MainCollectionController.setBackground(currentView: view)
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        describe.text = "Current style: \(styles[TimerController.timerStyle])"
+//        print(TimerController.timerStyle)
+//        delegate?.updateDescribe(style: TimerController.timerStyle)
     }
 
     // MARK: - Table view data source

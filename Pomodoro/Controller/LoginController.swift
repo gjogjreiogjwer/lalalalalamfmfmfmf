@@ -18,6 +18,7 @@ class LoginController: UIViewController {
     private let loginURL = "http://api.cervidae.com.au:8080/users/login"
     private let registerURL = "http://api.cervidae.com.au:8080/users/register"
     var currentAccount = ""
+    private var uniqueUserName = "null"
     
     static var currentScore = 0.0
     static var userName = "null"
@@ -49,6 +50,8 @@ class LoginController: UIViewController {
         createIcon(textField: account, imageName: accountIcon)
         createIcon(textField: password, imageName: passwordIcon)
         
+        uniqueUserName = UserDefaults.standard.string(forKey: "unique") ?? "null"
+        print(uniqueUserName)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,38 +93,55 @@ class LoginController: UIViewController {
             return 
         }
         
+        if paras["u"] == "null"{
+            self.performSegue(withIdentifier: "login", sender: nil)
+        }
+        
         if hasAccount{
-            AF.request(loginURL, method: .post, parameters: paras).responseJSON{
-                response in
-                if let json = response.value{
-                    let message = JSON(json)
-                    if message["success"] == 1{
-                        LoginController.currentScore = message["payload", "score"].doubleValue
-                        LoginController.userName = message["payload", "username"].stringValue
-                        print(message)
-                        self.performSegue(withIdentifier: "login", sender: nil)
-                    }
-                    else{
-                        print("login error")
+            if paras["u"] == uniqueUserName{
+                AF.request(loginURL, method: .post, parameters: paras).responseJSON{
+                    response in
+                    if let json = response.value{
+                        let message = JSON(json)
+                        if message["success"] == 1{
+                            LoginController.currentScore = message["payload", "score"].doubleValue
+                            LoginController.userName = message["payload", "username"].stringValue
+                            print(message)
+                            self.performSegue(withIdentifier: "login", sender: nil)
+                        }
+                        else{
+                            print("login error")
+                        }
                     }
                 }
             }
+            else{
+                notice(text: "Use your own account!")
+            }
+            
         }
         else{
-            AF.request(registerURL, method: .post, parameters: paras).responseJSON{
-                response in
-                if let json = response.value{
-                    let message = JSON(json)
-                    if message["success"] == 1{
-                        LoginController.currentScore = 0
-                        LoginController.userName = message["payload", "username"].stringValue
-                        self.performSegue(withIdentifier: "login", sender: nil)
-                    }
-                    else{
-                        print("register error")
+            if uniqueUserName == "null"{
+                UserDefaults.standard.set(paras["u"], forKey: "unique")
+                AF.request(registerURL, method: .post, parameters: paras).responseJSON{
+                    response in
+                    if let json = response.value{
+                        let message = JSON(json)
+                        if message["success"] == 1{
+                            LoginController.currentScore = 0
+                            LoginController.userName = message["payload", "username"].stringValue
+                            self.performSegue(withIdentifier: "login", sender: nil)
+                        }
+                        else{
+                            print("register error")
+                        }
                     }
                 }
             }
+            else{
+                notice(text: "You have already registered!")
+            }
+
         }
         
     }

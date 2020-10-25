@@ -392,6 +392,7 @@ class TimerController: UIViewController {
             //mode从micro的最小化改成扬声器
             try? audioSession!.setMode(AVAudioSession.Mode.moviePlayback)
             if let textView = textView{
+                doneButton.isEnabled = true
                 pauseButton.setTitle("Pause", for: .normal)
                 startButton.isHidden = false
                 if textView.text != quote{
@@ -414,6 +415,7 @@ class TimerController: UIViewController {
             pauseButton.isEnabled = true
             pauseButton.setTitleColor(originButtonColor, for: UIControl.State.normal)
             pauseButton.setTitle("Stop Recording", for: .normal)
+            doneButton.isEnabled = false
             startDictation()
         }
     }

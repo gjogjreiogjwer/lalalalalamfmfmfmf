@@ -20,8 +20,17 @@ class TodosTableController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         datas = realm.objects(Data.self)
-        
-        MainMenuController.setBackground(currentView: view)
+       
+//        setScollBackground()
+    }
+    
+    private func setScollBackground(){
+        let background = UIImageView(frame: view.frame)
+        background.contentMode = .scaleAspectFill
+        background.image = UIImage(named: "Yeta")
+        background.alpha = 0.3
+        view.addSubview(background)
+        view.insertSubview(background, at: 1)
     }
     
     

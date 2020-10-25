@@ -17,7 +17,8 @@ class RankingController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 //        overrideUserInterfaceStyle = .light
-        MainMenuController.setBackground(currentView: view)
+        MainCollectionController.setBackground(currentView: view)
+      
         
         showRankings(type: "No.", offset: numOffset)
         showRankings(type: "name", offset: nameOffset)

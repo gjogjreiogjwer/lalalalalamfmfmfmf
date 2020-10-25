@@ -24,8 +24,8 @@ class SettingTableController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        MainMenuController.setBackground(currentView: view)
+        print(aboutUsCell.frame.height)
+        MainCollectionController.setBackground(currentView: view)
         
         let tap = UITapGestureRecognizer(target: self, action:#selector(SettingTableController.handleTapToAboutUs(sender:)))
         aboutUsCell.addGestureRecognizer(tap)

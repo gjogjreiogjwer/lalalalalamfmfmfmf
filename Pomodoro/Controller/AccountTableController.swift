@@ -20,7 +20,7 @@ class AccountTableController: UITableViewController {
         
         logout()
 
-        MainMenuController.setBackground(currentView: view)
+        MainCollectionController.setBackground(currentView: view)
     }
     
     
