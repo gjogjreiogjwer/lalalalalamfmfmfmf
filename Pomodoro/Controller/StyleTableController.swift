@@ -64,9 +64,9 @@ class StyleTableController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! StyleCell
-        cell.accessoryType = .checkmark
         lastCell.accessoryType = .none
         lastCell = cell
+        cell.accessoryType = .checkmark
         TimerController.timerStyle = indexPath.row
         UserDefaults.standard.set(TimerController.timerStyle, forKey: "style")
         

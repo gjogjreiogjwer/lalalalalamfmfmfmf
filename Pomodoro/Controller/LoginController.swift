@@ -110,6 +110,7 @@ class LoginController: UIViewController {
                             self.performSegue(withIdentifier: "login", sender: nil)
                         }
                         else{
+                            self.notice(text: "Wrong password!")
                             print("login error")
                         }
                     }
@@ -179,7 +180,7 @@ class LoginController: UIViewController {
         info.frame.size.width = 200
         info.frame.size.height = 100
         info.center.x = view.center.x
-        info.center.y = view.frame.height + 200
+        info.center.y = -200
         
         UIView.animate(withDuration: 1,
                        delay: 0,
@@ -187,14 +188,14 @@ class LoginController: UIViewController {
                        initialSpringVelocity: 10,
                        options: [],
                        animations: {
-                        info.center.y -= 350
+                        info.center.y += 350
                        },
                        completion: nil)
         
         UIView.animate(withDuration: 0.5,
                        delay: 2,
                        options: .curveEaseIn) {
-            info.center.y += 350
+            info.center.y -= 350
         } completion: { _ in
             info.removeFromSuperview()
         }
