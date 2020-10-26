@@ -9,113 +9,156 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-private let reuseIdentifier = "cell"
 
+/*
+ Main menu interface
+ */
 class MainCollectionController: UICollectionViewController {
     
-    private var cardViewArr: [UIView] = []
+    // Used to link cell
+    private let reuseIdentifier = "cell"
+    
+    // Style array
     private let styles = ["Normal", "Flip", "Microphone"]
+    
+    // Message for each card
     private let dict:[String:String] = [
         "List": "Each task can be added, deleted, edited, and queried. Moreover, each task takes different time to complete.",
         "Setting": "Account message.",
         "Ranking": "Ranking of scores.",
         "Style": "Current style: "]
-//    private var shadowView:UIView!
-//    private var subView:UIView!
-//    private var background:UIImageView!
-//    private var subViewTitle:UILabel!
-//    private var describe:UILabel!
-    private var styleDescribe: UILabel!
+    
+    // URL for getting ranking
     private let rankingURL = "http://api.cervidae.com.au:8080/rankings?top=10&forced"
-    private var rankArr: [[String: String]] = []
-    private var cardFrame: CGRect!
+    
+    // UIView for each card
+    private var cardViewArr: [UIView] = []
+    
+    // The number of cells
     private let cellsNum = 4
     
+    //Description for style card
+    private var styleDescribe: UILabel!
+    
+    // Array of ranking
+    private var rankArr: [[String: String]] = []
+    
+    // Frame of card 
+    private var cardFrame: CGRect!
+    
+    
+    // MARK: - System methods
 
+    /*
+     init
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .light
-
         TimerController.timerStyle = UserDefaults.standard.integer(forKey: "style")
-       
     }
     
+    
+    /*
+     Request ranking from server and hide navigation bar
+     @parameter animated: perform animation or not
+     */
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getRankings()
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
+    
+    /*
+     Show navigation bar in next page
+     @parameter animated: perform animation or not
+     */
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     
-    class func setBackground(currentView: UIView){
-        let background = UIImageView(frame: currentView.frame)
-        background.contentMode = .scaleAspectFill
-        background.image = UIImage(named: "Yeta")
-        background.alpha = 0.3
-        currentView.addSubview(background)
-    }
-
-
+    // MARK: - Navigation
+    
+    /*
+     Transfer message to next pages
+     @parameter segue: segue to which pages
+     @parameter sender: message when segue button(empty in default)
+     */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
         if segue.identifier == "Ranking"{
             let vc = segue.destination as! RankingController
-//            vc.rankings? = rankings!
             vc.rankArr = rankArr
-//            vc.modalPresentationStyle = .fullScreen
         }
         else if segue.identifier == "Style"{
             let vc = segue.destination as! StyleTableController
             vc.describe = styleDescribe
         }
     }
+    
 
-    // MARK: UICollectionViewDataSource
+    // MARK: - UICollectionViewDataSource
 
+    /*
+     @parameter collectionView: current collection view
+     @returns: the number of sections
+     */
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
 
+    /*
+     @parameter collectionView: current collection view
+     @parameter numberOfItemsInSection: row in which section
+     @returns: the number of row
+     */
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         return cellsNum
     }
 
+    
+    /*
+     Init cells
+     @parameter collectionView: current collection view
+     @parameter cellForItemAt: current cell
+     @parameter indexPath: cell position
+     @returns cell: main collection cell
+     */
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! MainCollectionCell
-
         cardFrame = cell.cardView.frame
 
         if indexPath.row == 0{
-            jump(text: "List")
+            createCard(text: "List")
         }
         else if indexPath.row == 1{
-            jump(text: "Ranking")
+            createCard(text: "Ranking")
         }
         else if indexPath.row == 2{
-            jump(text: "Style")
+            createCard(text: "Style")
         }
         else if indexPath.row == 3{
-            jump(text: "Setting")
+            createCard(text: "Setting")
         }
         
         cell.cardView.addSubview(cardViewArr[indexPath.row])
-//        cell.cardView.backgroundColor = .red
-//        print(cell.cardView.frame)
-     
         return cell
     }
     
     
-    private func jump(text:String){
+    // MARK: - Create UI
+    
+    
+    /*
+     Create card
+     @parameter text: which card will be created
+     */
+    private func createCard(text:String){
         let shadowView = createShadowView()
         let subView = createSubView(shadowView: shadowView)
         let background = createBackground(subView: subView)
@@ -146,57 +189,11 @@ class MainCollectionController: UICollectionViewController {
         }
     }
     
-    @objc func handleTapToList(sender:UITapGestureRecognizer) {
-        if sender.state == .ended{
-            performSegue(withIdentifier: "List", sender: nil)
-        }
-    }
     
-    
-    @objc func handleTapToSetting(sender:UITapGestureRecognizer) {
-        if sender.state == .ended{
-            performSegue(withIdentifier: "Setting", sender: nil)
-        }
-    }
-    
-    @objc func handleTapToRanking(sender:UITapGestureRecognizer) {
-        if sender.state == .ended{
-            performSegue(withIdentifier: "Ranking", sender: nil)
-        }
-    }
-    
-    
-    @objc func handleTapToStyle(sender:UITapGestureRecognizer) {
-        if sender.state == .ended{
-            performSegue(withIdentifier: "Style", sender: nil)
-        }
-    }
-    
-    
-    func getRankings(){
-        AF.request(rankingURL, method: .get).responseJSON{
-            response in
-            if let json = response.value{
-                let message = JSON(json)
-                if message["success"] == 1{
-                    self.rankArr = []
-                    for i in 1...10{
-                        let tempName = message["payload", "rankMap", String(i), "username"].stringValue
-                        let tempScore = message["payload", "rankMap", String(i), "score"].stringValue
-                        self.rankArr.append(["name": tempName, "score": tempScore])
-//                        print(message["payload", "rankMap", "2"])
-//                        print(self.rankArr)
-                    }
-                    
-                    print("get ranks success")
-                }
-                else{
-                    print("get ranks error")
-                }
-            }
-        }
-    }
-    
+    /*
+     Create shadow of card
+     @returns shadowView: shadow UIView
+     */
     private func createShadowView() -> UIView{
         let shadowView = UIView(frame: cardFrame)
 
@@ -209,6 +206,11 @@ class MainCollectionController: UICollectionViewController {
     }
     
     
+    /*
+     Create subView of card
+     @parameter shadowView: shadow UIView
+     @returns subView: subView UIView
+     */
     private func createSubView(shadowView: UIView) -> UIView{
         let subView = UIView()
         subView.contentMode = .scaleToFill
@@ -222,6 +224,11 @@ class MainCollectionController: UICollectionViewController {
     }
     
     
+    /*
+     Create background of card
+     @parameter subView: subView UIView
+     @returns background: background image
+     */
     private func createBackground(subView: UIView) -> UIImageView{
         let background = UIImageView()
         background.contentMode = .scaleToFill
@@ -236,10 +243,15 @@ class MainCollectionController: UICollectionViewController {
     }
     
     
+    /*
+     Create title of card
+     @parameter text: card title
+     @parameter subView: subView UIView
+     @returns subViewTitle: card title UILabel
+     */
     private func createTitleLabel(text:String, subView: UIView) -> UILabel{
         let subViewTitle = UILabel()
         subViewTitle.font = UIFont.boldSystemFont(ofSize: 40)
-//        subViewTitle.adjustsFontSizeToFitWidth=true
         subViewTitle.text = text
         subViewTitle.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         subViewTitle.frame.size.width = 200
@@ -250,6 +262,12 @@ class MainCollectionController: UICollectionViewController {
     }
     
     
+    /*
+     Create description of card
+     @parameter text: card title
+     @parameter subView: subView UIView
+     @returns subViewTitle: card description UILabel
+     */
     func createDescribeLabel(text:String, subView: UIView) -> UILabel{
         let describe = UILabel()
         describe.font = UIFont.systemFont(ofSize: 20)
@@ -273,18 +291,109 @@ class MainCollectionController: UICollectionViewController {
         return describe
     }
 
- 
+    
+    // MARK: - Gesture methods
+    
+    /*
+     Click card to link listing page
+     @parameter sender: tap gesture recognizer
+     */
+    @objc func handleTapToList(sender:UITapGestureRecognizer) {
+        if sender.state == .ended{
+            performSegue(withIdentifier: "List", sender: nil)
+        }
+    }
+    
+    
+    /*
+     Click card to link setting page
+     @parameter sender: tap gesture recognizer
+     */
+    @objc func handleTapToSetting(sender:UITapGestureRecognizer) {
+        if sender.state == .ended{
+            performSegue(withIdentifier: "Setting", sender: nil)
+        }
+    }
+    
+    
+    /*
+     Click card to link ranking page
+     @parameter sender: tap gesture recognizer
+     */
+    @objc func handleTapToRanking(sender:UITapGestureRecognizer) {
+        if sender.state == .ended{
+            performSegue(withIdentifier: "Ranking", sender: nil)
+        }
+    }
+    
+    
+    /*
+     Click card to link style page
+     @parameter sender: tap gesture recognizer
+     */
+    @objc func handleTapToStyle(sender:UITapGestureRecognizer) {
+        if sender.state == .ended{
+            performSegue(withIdentifier: "Style", sender: nil)
+        }
+    }
+    
+    
+    // MARK: - Helper
+    
+    /*
+     Regurest ranking from server
+     */
+    private func getRankings(){
+        AF.request(rankingURL, method: .get).responseJSON{
+            response in
+            if let json = response.value{
+                let message = JSON(json)
+                if message["success"] == 1{
+                    self.rankArr = []
+                    for i in 1...10{
+                        let tempName = message["payload", "rankMap", String(i), "username"].stringValue
+                        let tempScore = message["payload", "rankMap", String(i), "score"].stringValue
+                        self.rankArr.append(["name": tempName, "score": tempScore])
+                    }
+                    
+                    print("get ranks success")
+                }
+                else{
+                    print("get ranks error")
+                }
+            }
+        }
+    }
+    
 
+    /*
+     static method for creating backgound
+     @parameter currentView: current view
+     */
+    class func setBackground(currentView: UIView){
+        let background = UIImageView(frame: currentView.frame)
+        background.contentMode = .scaleAspectFill
+        background.image = UIImage(named: "Yeta")
+        background.alpha = 0.3
+        currentView.addSubview(background)
+    }
+    
 }
 
+
+// MARK: - Extension: implement collection flow layout
+
 extension MainCollectionController: UICollectionViewDelegateFlowLayout{
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 40, left: 10, bottom: 10, right: 10)
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 10
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 10
@@ -294,11 +403,7 @@ extension MainCollectionController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 380, height: 180)
     }
+    
 }
 
-//extension MainCollectionController: StyleDelegate{
-//    func updateDescribe(style: Int){
-//        styleDescribe.text = "Current style: \(styles[style])"
-//        styleDescribe.text = "xxx"
-//    }
-//}
+

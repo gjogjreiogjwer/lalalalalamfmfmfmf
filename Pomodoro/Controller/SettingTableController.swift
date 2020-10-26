@@ -7,8 +7,12 @@
 
 import UIKit
 
+/*
+ Setting interface
+ */
 class SettingTableController: UITableViewController {
     
+    // About us infomation
     private let aboutUsInfo = """
                     Group-W01/16-4
                     
@@ -20,18 +24,29 @@ class SettingTableController: UITableViewController {
                     Shuai Mou
                     """
 
+    // UI contorl for about us cell
     @IBOutlet weak var aboutUsCell: UITableViewCell!
     
+    
+    // MARK: - System methods
+
+    /*
+     Init
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
         print(aboutUsCell.frame.height)
         MainCollectionController.setBackground(currentView: view)
-        
         let tap = UITapGestureRecognizer(target: self, action:#selector(SettingTableController.handleTapToAboutUs(sender:)))
         aboutUsCell.addGestureRecognizer(tap)
     }
     
     
+    // MARK: - Helper
+    
+    /*
+     Tap gesture when press "About us" cell
+     */
     @objc func handleTapToAboutUs(sender:UITapGestureRecognizer) {
         if sender.state == .ended{
             showUs()
@@ -39,6 +54,9 @@ class SettingTableController: UITableViewController {
     }
     
     
+    /*
+     Create UILabel to show about us information
+     */
     private func showUs(){
         let info = UILabel()
         info.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
@@ -47,7 +65,6 @@ class SettingTableController: UITableViewController {
         info.font = UIFont.systemFont(ofSize: 23)
         info.numberOfLines = 0
         info.text = aboutUsInfo
-            
         info.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         info.textAlignment = .center
         tableView.addSubview(info)
@@ -75,64 +92,5 @@ class SettingTableController: UITableViewController {
             info.removeFromSuperview()
         }
     }
-
-    // MARK: - Table view data source
-
-   
-
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

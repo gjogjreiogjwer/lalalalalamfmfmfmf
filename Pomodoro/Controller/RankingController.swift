@@ -7,19 +7,33 @@
 
 import UIKit
 
+/*
+ Ranking interface
+ */
 class RankingController: UIViewController {
     
+    // Array of ranking
     var rankArr: [[String: String]] = []
+    
+    // ranking number offset
     private let numOffset = -140
+    
+    // user name offset
     private let nameOffset = -10
+    
+    // score offset
     private let scoreOffset = 130
 
+    
+    // MARK: - System methods
+
+    /*
+     Init
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
-//        overrideUserInterfaceStyle = .light
         MainCollectionController.setBackground(currentView: view)
-      
-        
+
         showRankings(type: "No.", offset: numOffset)
         showRankings(type: "name", offset: nameOffset)
         showRankings(type: "score", offset: scoreOffset)
@@ -28,18 +42,14 @@ class RankingController: UIViewController {
         showTitles(type: "score", offset: scoreOffset)
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        navigationController?.setNavigationBarHidden(true, animated: animated)
-//        navigationController?.navigationBar.alpha = 0
-//    }
-//
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        navigationController?.setNavigationBarHidden(false, animated: animated)
-//    }
     
-  
+    // MARK: - Helper
+    
+    /*
+     Show header
+     @parameter type: header name
+     @parameter offset: UILabel offset
+     */
     private func showTitles(type: String, offset: Int){
         let titleLabel = UILabel()
         titleLabel.font = UIFont.boldSystemFont(ofSize: 35)
@@ -56,10 +66,15 @@ class RankingController: UIViewController {
         titleLabel.center.y = view.center.y - 180
         titleLabel.text = type
         view.addSubview(titleLabel)
-        
     }
     
     
+    /*
+     Show ranking
+     @parameter type: header name
+     @parameter offset: UILabel offset
+
+     */
     private func showRankings(type: String, offset: Int){
         let rankLabel = UILabel()
         rankLabel.font = UIFont.systemFont(ofSize: 30)
@@ -84,24 +99,8 @@ class RankingController: UIViewController {
             else{
                 text += "\(String(rankArr[i][type]!))\n"
             }
-            
         }
-        
         rankLabel.text = text
         view.addSubview(rankLabel)
     }
-    
-  
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -7,7 +7,11 @@
 
 import UIKit
 
+/*
+ Main menu card cell
+ */
 class MainCollectionCell: UICollectionViewCell {
     
+    // UI contorl card cell
     @IBOutlet weak var cardView: UIView!
 }

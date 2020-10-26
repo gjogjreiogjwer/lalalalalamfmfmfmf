@@ -7,23 +7,15 @@
 
 import UIKit
 
+/*
+ Todo cell
+ */
 class TodoCell: UITableViewCell {
-
     
+    // UI contorl for task name label
     @IBOutlet weak var todo: UILabel!
+    
+    // UI contorl for left time label
     @IBOutlet weak var leftTime: UILabel!
     
-    
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }

@@ -124,21 +124,21 @@
 		98AA65C62524599D00AAC703 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				986BEF80252C43B1007D3F1B /* EditTableController.swift */,
 				98AA65B12524598100AAC703 /* AppDelegate.swift */,
 				98AA65B32524598100AAC703 /* SceneDelegate.swift */,
-				98AA65CD25245DE900AAC703 /* TodosTableController.swift */,
-				98AA65D4252460C100AAC703 /* TodoCell.swift */,
-				986BEF84252D5D29007D3F1B /* TimerController.swift */,
-				982FDFCD2539D8DE006961C2 /* RankingController.swift */,
-				98E55E202531E9F80048DC7C /* SettingTableController.swift */,
-				98E55E292531F97A0048DC7C /* StyleCell.swift */,
-				98E55E2D2531FA5F0048DC7C /* StyleTableController.swift */,
 				98B80F5F25393D48000AB18A /* LoginController.swift */,
-				98B80F662539A9A8000AB18A /* AccountTableController.swift */,
-				98B80F712539C5B7000AB18A /* EditUserNameTableController.swift */,
 				984B9517253C5D1600EC78CE /* MainCollectionController.swift */,
 				984B951A253C5D2600EC78CE /* MainCollectionCell.swift */,
+				98AA65CD25245DE900AAC703 /* TodosTableController.swift */,
+				98AA65D4252460C100AAC703 /* TodoCell.swift */,
+				986BEF80252C43B1007D3F1B /* EditTableController.swift */,
+				986BEF84252D5D29007D3F1B /* TimerController.swift */,
+				982FDFCD2539D8DE006961C2 /* RankingController.swift */,
+				98E55E2D2531FA5F0048DC7C /* StyleTableController.swift */,
+				98E55E292531F97A0048DC7C /* StyleCell.swift */,
+				98B80F662539A9A8000AB18A /* AccountTableController.swift */,
+				98E55E202531E9F80048DC7C /* SettingTableController.swift */,
+				98B80F712539C5B7000AB18A /* EditUserNameTableController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";

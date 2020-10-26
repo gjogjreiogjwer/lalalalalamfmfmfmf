@@ -8,7 +8,9 @@
 import Foundation
 import RealmSwift
 
-
+/*
+ User message to store
+ */
 class Data:Object{
     @objc dynamic var name = ""
     @objc dynamic var leftTime = 30

@@ -9,146 +9,106 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-
+/*
+ Login Interface
+ */
 class LoginController: UIViewController {
 
+    // Icon account system name
     private let accountIcon = "person"
+    
+    // Icon passward system name
     private let passwordIcon = "key"
-    private var hasAccount = true
+    
+    // URL for login
     private let loginURL = "http://api.cervidae.com.au:8080/users/login"
+    
+    // URL for register
     private let registerURL = "http://api.cervidae.com.au:8080/users/register"
-    var currentAccount = ""
+    
+    // Unique userName for local store
     private var uniqueUserName = "null"
     
+    // Has account or not
+    private var hasAccount = true
+    
+    // Score of the user
     static var currentScore = 0.0
-    static var userName = "null"
     
+    // Current user name
+    static var userName = ""
     
+    // UI controls
     @IBOutlet weak var account: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var registerButton: UIButton!
     
     
+    // MARK: - System methods
+
+    /*
+     Init
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.navigationItem.hidesBackButton = true
-        let image = UIImageView()
-        image.frame.size.width = 80
-        image.frame.size.height = 80
-        image.center.x = view.center.x
-        image.center.y = view.center.y - 250
-        image.layer.cornerRadius = image.frame.width / 2
-        image.layer.masksToBounds = true
-        image.contentMode = .scaleAspectFill
-        image.image = UIImage(named: "icon")
-        view.addSubview(image)
         
-        account.text = currentAccount
+        createIconImage()
+        
+        account.text = LoginController.userName
         account.becomeFirstResponder()
         
-        createIcon(textField: account, imageName: accountIcon)
-        createIcon(textField: password, imageName: passwordIcon)
+        createSubicon(textField: account, imageName: accountIcon)
+        createSubicon(textField: password, imageName: passwordIcon)
         
         uniqueUserName = UserDefaults.standard.string(forKey: "unique") ?? "null"
-        print(uniqueUserName)
+        print("User name: \(uniqueUserName)")
     }
     
+    
+    /*
+     Hide navigation bar
+     @parameter animated: perform animation or not
+     */
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
+    
+    /*
+     Show navigation bar in next page
+     @parameter animated: perform animation or not
+     */
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
     
+    // MARK: - UIButton action
     
-    func createIcon(textField: UITextField, imageName: String){
-        textField.layer.cornerRadius = 5
-        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
-        textField.leftViewMode = .always
-        if imageName == passwordIcon{
-            textField.isSecureTextEntry = true
-        }
-        
-        let icon = UIImageView(frame: CGRect(x: 11, y: 11, width: 23, height: 22))
-        icon.image = UIImage(systemName: imageName)
-        textField.leftView?.addSubview(icon)
-    }
-    
-    
-    
-    
+    /*
+     Execute when press "login" button
+     @parameter: sender: message when press button(empty in default)
+     */
     @IBAction func login(_ sender: Any) {
         let paras = ["u": account.text!, "p": password.text!]
-        if paras["u"] == ""{
-            notice(text: "Need Account!")
-            return
-        }
-        if paras["p"] == ""{
-            notice(text: "Need password!")
-            return 
-        }
-        
-        if paras["u"] == "null"{
-            self.performSegue(withIdentifier: "login", sender: nil)
-        }
+        beforeLogin(paras: paras)
         
         if hasAccount{
-            if paras["u"] == uniqueUserName{
-                AF.request(loginURL, method: .post, parameters: paras).responseJSON{
-                    response in
-                    if let json = response.value{
-                        let message = JSON(json)
-                        if message["success"] == 1{
-                            LoginController.currentScore = message["payload", "score"].doubleValue
-                            LoginController.userName = message["payload", "username"].stringValue
-                            print(message)
-                            self.performSegue(withIdentifier: "login", sender: nil)
-                        }
-                        else{
-                            self.notice(text: "Wrong password!")
-                            print("login error")
-                        }
-                    }
-                }
-            }
-            else{
-                notice(text: "Use your own account!")
-            }
-            
+            doingLogin(paras: paras)
         }
         else{
-            if uniqueUserName == "null"{
-                UserDefaults.standard.set(paras["u"], forKey: "unique")
-                AF.request(registerURL, method: .post, parameters: paras).responseJSON{
-                    response in
-                    if let json = response.value{
-                        let message = JSON(json)
-                        if message["success"] == 1{
-                            LoginController.currentScore = 0
-                            LoginController.userName = message["payload", "username"].stringValue
-                            self.performSegue(withIdentifier: "login", sender: nil)
-                        }
-                        else{
-                            print("register error")
-                        }
-                    }
-                }
-            }
-            else{
-                notice(text: "You have already registered!")
-            }
-
+            doingRegister(paras: paras)
         }
-        
     }
     
     
-    
+    /*
+     Execute when press "No Account?" or "Return login" button
+     @parameter: sender: message when press button(empty in default)
+     */
     @IBAction func register(_ sender: Any) {
         if hasAccount{
             hasAccount = !hasAccount
@@ -160,10 +120,48 @@ class LoginController: UIViewController {
             loginButton.setTitle("Login", for: .normal)
             registerButton.setTitle("No account?", for: .normal)
         }
-        
     }
     
     
+    // MARK: - Create UI
+    
+    /*
+     Create icon
+     */
+    private func createIconImage(){
+        let image = UIImageView()
+        image.frame.size.width = 80
+        image.frame.size.height = 80
+        image.center.x = view.center.x
+        image.center.y = view.center.y - 250
+        image.layer.cornerRadius = image.frame.width / 2
+        image.layer.masksToBounds = true
+        image.contentMode = .scaleAspectFill
+        image.image = UIImage(named: "icon")
+        view.addSubview(image)
+    }
+
+    
+    /*
+     Create subIcon
+     */
+    private func createSubicon(textField: UITextField, imageName: String){
+        textField.layer.cornerRadius = 5
+        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
+        textField.leftViewMode = .always
+        if imageName == passwordIcon{
+            textField.isSecureTextEntry = true
+        }
+        let icon = UIImageView(frame: CGRect(x: 11, y: 11, width: 23, height: 22))
+        icon.image = UIImage(systemName: imageName)
+        textField.leftView?.addSubview(icon)
+    }
+    
+    
+    /*
+     Show notice when specific action happens
+     @parameter text: notice message
+     */
     private func notice(text: String){
         let info = UILabel()
         info.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
@@ -172,7 +170,6 @@ class LoginController: UIViewController {
         info.font = UIFont.systemFont(ofSize: 23)
         info.numberOfLines = 0
         info.text = text
-            
         info.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         info.textAlignment = .center
         view.addSubview(info)
@@ -201,15 +198,82 @@ class LoginController: UIViewController {
         }
     }
     
-
     
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // MARK: - Helper
+    
+    /*
+     Determine if the login preconditions are met
+     @parameter paras: dictionary of username and passward
+     */
+    private func beforeLogin(paras: [String:String]){
+        if paras["u"] == ""{
+            notice(text: "Need Account!")
+            return
+        }
+        if paras["p"] == ""{
+            notice(text: "Need password!")
+            return
+        }
+        if paras["u"] == "null"{
+            self.performSegue(withIdentifier: "login", sender: nil)
+        }
     }
     
-
+    
+    /*
+     Request message from server when login
+     @parameter paras: dictionary of username and passward
+     */
+    private func doingLogin(paras: [String:String]){
+        if paras["u"] == uniqueUserName{
+            AF.request(loginURL, method: .post, parameters: paras).responseJSON{
+                response in
+                if let json = response.value{
+                    let message = JSON(json)
+                    if message["success"] == 1{
+                        LoginController.currentScore = message["payload", "score"].doubleValue
+                        LoginController.userName = message["payload", "username"].stringValue
+                        print(message)
+                        self.performSegue(withIdentifier: "login", sender: nil)
+                    }
+                    else{
+                        self.notice(text: "Wrong password!")
+                        print("login error")
+                    }
+                }
+            }
+        }
+        else{
+            notice(text: "Use your own account!")
+        }
+    }
+    
+    
+    /*
+     Request message from server when register
+     @parameter paras: dictionary of username and passward
+     */
+    private func doingRegister(paras: [String:String]){
+        if uniqueUserName == "null"{
+            UserDefaults.standard.set(paras["u"], forKey: "unique")
+            AF.request(registerURL, method: .post, parameters: paras).responseJSON{
+                response in
+                if let json = response.value{
+                    let message = JSON(json)
+                    if message["success"] == 1{
+                        LoginController.currentScore = 0
+                        LoginController.userName = message["payload", "username"].stringValue
+                        self.performSegue(withIdentifier: "login", sender: nil)
+                    }
+                    else{
+                        print("register error")
+                    }
+                }
+            }
+        }
+        else{
+            notice(text: "You have already registered!")
+        }
+    }
+    
 }
