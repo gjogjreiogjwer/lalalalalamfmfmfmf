@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 /*
  Ranking interface
@@ -15,6 +17,9 @@ class RankingController: UIViewController {
     // Array of ranking
     var rankArr: [[String: String]] = []
     
+    // URL for getting ranking
+    private let rankingURL = "http://api.cervidae.com.au:8080/rankings?top=10&forced"
+    
     // ranking number offset
     private let numOffset = -140
     
@@ -23,6 +28,9 @@ class RankingController: UIViewController {
     
     // score offset
     private let scoreOffset = 130
+    
+    // loading UILabel
+    private var loadingLabel: UILabel!
 
     
     // MARK: - System methods
@@ -33,17 +41,68 @@ class RankingController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         MainCollectionController.setBackground(currentView: view)
-
-        showRankings(type: "No.", offset: numOffset)
-        showRankings(type: "name", offset: nameOffset)
-        showRankings(type: "score", offset: scoreOffset)
-        showTitles(type: "No.", offset: numOffset)
-        showTitles(type: "name", offset: nameOffset)
-        showTitles(type: "score", offset: scoreOffset)
+        
+        loading()
+        getRankings()
+        
     }
     
     
     // MARK: - Helper
+    
+    /*
+     Regurest ranking from server
+     */
+    private func getRankings(){
+        AF.request(rankingURL, method: .get).responseJSON{
+            response in
+            if let json = response.value{
+                let message = JSON(json)
+                if message["success"] == 1{
+                    self.rankArr = []
+                    for i in 1...10{
+                        let tempName = message["payload", "rankMap", String(i), "username"].stringValue
+                        let tempScore = message["payload", "rankMap", String(i), "score"].stringValue
+                        self.rankArr.append(["name": tempName, "score": tempScore])
+                    }
+                    print("get ranks success")
+                    self.loadingLabel.removeFromSuperview()
+                    self.showTitles(type: "No.", offset: self.numOffset)
+                    self.showTitles(type: "name", offset: self.nameOffset)
+                    self.showTitles(type: "score", offset: self.scoreOffset)
+                    self.showRankings(type: "No.", offset: self.numOffset)
+                    self.showRankings(type: "name", offset: self.nameOffset)
+                    self.showRankings(type: "score", offset: self.scoreOffset)
+                }
+                else{
+                    print("get ranks error")
+                }
+            }
+        }
+    }
+    
+    
+    /*
+     Before getting ranking
+     */
+    private func loading(){
+        loadingLabel = UILabel()
+        loadingLabel.font = UIFont.boldSystemFont(ofSize: 50)
+        if traitCollection.userInterfaceStyle == .dark{
+            loadingLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        }
+        else{
+            loadingLabel.textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        }
+        loadingLabel.textAlignment = .center
+        loadingLabel.frame.size.width = 400
+        loadingLabel.frame.size.height = 400
+        loadingLabel.center.x = view.center.x
+        loadingLabel.center.y = view.center.y
+        loadingLabel.text = "Loading..."
+        view.addSubview(loadingLabel)
+    }
+    
     
     /*
      Show header

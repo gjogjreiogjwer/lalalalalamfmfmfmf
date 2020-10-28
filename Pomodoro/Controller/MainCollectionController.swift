@@ -28,9 +28,6 @@ class MainCollectionController: UICollectionViewController {
         "Ranking": "Ranking of scores.",
         "Style": "Current style: "]
     
-    // URL for getting ranking
-    private let rankingURL = "http://api.cervidae.com.au:8080/rankings?top=10&forced"
-    
     // UIView for each card
     private var cardViewArr: [UIView] = []
     
@@ -39,9 +36,6 @@ class MainCollectionController: UICollectionViewController {
     
     //Description for style card
     private var styleDescribe: UILabel!
-    
-    // Array of ranking
-    private var rankArr: [[String: String]] = []
     
     // Frame of card 
     private var cardFrame: CGRect!
@@ -65,7 +59,7 @@ class MainCollectionController: UICollectionViewController {
      */
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        getRankings()
+//        getRankings()
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
@@ -88,11 +82,7 @@ class MainCollectionController: UICollectionViewController {
      @parameter sender: message when segue button(empty in default)
      */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Ranking"{
-            let vc = segue.destination as! RankingController
-            vc.rankArr = rankArr
-        }
-        else if segue.identifier == "Style"{
+        if segue.identifier == "Style"{
             let vc = segue.destination as! StyleTableController
             vc.describe = styleDescribe
         }
@@ -331,31 +321,6 @@ class MainCollectionController: UICollectionViewController {
     
     
     // MARK: - Helper
-    
-    /*
-     Regurest ranking from server
-     */
-    private func getRankings(){
-        AF.request(rankingURL, method: .get).responseJSON{
-            response in
-            if let json = response.value{
-                let message = JSON(json)
-                if message["success"] == 1{
-                    self.rankArr = []
-                    for i in 1...10{
-                        let tempName = message["payload", "rankMap", String(i), "username"].stringValue
-                        let tempScore = message["payload", "rankMap", String(i), "score"].stringValue
-                        self.rankArr.append(["name": tempName, "score": tempScore])
-                    }
-                    print("get ranks success")
-                }
-                else{
-                    print("get ranks error")
-                }
-            }
-        }
-    }
-    
 
     /*
      static method for creating backgound
