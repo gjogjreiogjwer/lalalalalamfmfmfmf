@@ -61,8 +61,8 @@ class LoginController: UIViewController {
         createSubicon(textField: account, imageName: accountIcon)
         createSubicon(textField: password, imageName: passwordIcon)
         
-        uniqueUserName = UserDefaults.standard.string(forKey: "unique") ?? "null"
-        print("User name: \(uniqueUserName)")
+//        uniqueUserName = UserDefaults.standard.string(forKey: "unique") ?? "null"
+//        print("User name: \(uniqueUserName)")
     }
     
     
@@ -225,27 +225,23 @@ class LoginController: UIViewController {
      @parameter paras: dictionary of username and passward
      */
     private func doingLogin(paras: [String:String]){
-        if paras["u"] == uniqueUserName{
-            AF.request(loginURL, method: .post, parameters: paras).responseJSON{
-                response in
-                if let json = response.value{
-                    let message = JSON(json)
-                    if message["success"] == 1{
-                        LoginController.currentScore = message["payload", "score"].doubleValue
-                        LoginController.userName = message["payload", "username"].stringValue
-                        print(message)
-                        self.performSegue(withIdentifier: "login", sender: nil)
-                    }
-                    else{
-                        self.notice(text: "Wrong password!")
-                        print("login error")
-                    }
+        AF.request(loginURL, method: .post, parameters: paras).responseJSON{
+            response in
+            if let json = response.value{
+                let message = JSON(json)
+                if message["success"] == 1{
+                    LoginController.currentScore = message["payload", "score"].doubleValue
+                    LoginController.userName = message["payload", "username"].stringValue
+                    print(message)
+                    self.performSegue(withIdentifier: "login", sender: nil)
+                }
+                else{
+                    self.notice(text: "Wrong password!")
+                    print("login error")
                 }
             }
         }
-        else{
-            notice(text: "Use your own account!")
-        }
+        
     }
     
     
@@ -254,25 +250,20 @@ class LoginController: UIViewController {
      @parameter paras: dictionary of username and passward
      */
     private func doingRegister(paras: [String:String]){
-        if uniqueUserName == "null"{
-            UserDefaults.standard.set(paras["u"], forKey: "unique")
-            AF.request(registerURL, method: .post, parameters: paras).responseJSON{
-                response in
-                if let json = response.value{
-                    let message = JSON(json)
-                    if message["success"] == 1{
-                        LoginController.currentScore = 0
-                        LoginController.userName = message["payload", "username"].stringValue
-                        self.performSegue(withIdentifier: "login", sender: nil)
-                    }
-                    else{
-                        print("register error")
-                    }
+        UserDefaults.standard.set(paras["u"], forKey: "unique")
+        AF.request(registerURL, method: .post, parameters: paras).responseJSON{
+            response in
+            if let json = response.value{
+                let message = JSON(json)
+                if message["success"] == 1{
+                    LoginController.currentScore = 0
+                    LoginController.userName = message["payload", "username"].stringValue
+                    self.performSegue(withIdentifier: "login", sender: nil)
+                }
+                else{
+                    print("register error")
                 }
             }
-        }
-        else{
-            notice(text: "You have already registered!")
         }
     }
     

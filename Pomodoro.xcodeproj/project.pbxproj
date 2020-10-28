@@ -28,7 +28,6 @@
 		98AA65D5252460C100AAC703 /* TodoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AA65D4252460C100AAC703 /* TodoCell.swift */; };
 		98B80F6025393D48000AB18A /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B80F5F25393D48000AB18A /* LoginController.swift */; };
 		98B80F672539A9A8000AB18A /* AccountTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B80F662539A9A8000AB18A /* AccountTableController.swift */; };
-		98B80F722539C5B7000AB18A /* EditUserNameTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B80F712539C5B7000AB18A /* EditUserNameTableController.swift */; };
 		98E55E212531E9F80048DC7C /* SettingTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E55E202531E9F80048DC7C /* SettingTableController.swift */; };
 		98E55E2A2531F97A0048DC7C /* StyleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E55E292531F97A0048DC7C /* StyleCell.swift */; };
 		98E55E2E2531FA5F0048DC7C /* StyleTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E55E2D2531FA5F0048DC7C /* StyleTableController.swift */; };
@@ -60,7 +59,6 @@
 		98AA65D4252460C100AAC703 /* TodoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoCell.swift; sourceTree = "<group>"; };
 		98B80F5F25393D48000AB18A /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		98B80F662539A9A8000AB18A /* AccountTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableController.swift; sourceTree = "<group>"; };
-		98B80F712539C5B7000AB18A /* EditUserNameTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserNameTableController.swift; sourceTree = "<group>"; };
 		98E55E202531E9F80048DC7C /* SettingTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableController.swift; sourceTree = "<group>"; };
 		98E55E292531F97A0048DC7C /* StyleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleCell.swift; sourceTree = "<group>"; };
 		98E55E2D2531FA5F0048DC7C /* StyleTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleTableController.swift; sourceTree = "<group>"; };
@@ -138,7 +136,6 @@
 				98E55E292531F97A0048DC7C /* StyleCell.swift */,
 				98B80F662539A9A8000AB18A /* AccountTableController.swift */,
 				98E55E202531E9F80048DC7C /* SettingTableController.swift */,
-				98B80F712539C5B7000AB18A /* EditUserNameTableController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -309,7 +306,6 @@
 				98AA65B42524598100AAC703 /* SceneDelegate.swift in Sources */,
 				986BEF85252D5D29007D3F1B /* TimerController.swift in Sources */,
 				98AA65CE25245DE900AAC703 /* TodosTableController.swift in Sources */,
-				98B80F722539C5B7000AB18A /* EditUserNameTableController.swift in Sources */,
 				984B9518253C5D1600EC78CE /* MainCollectionController.swift in Sources */,
 				98AA65D5252460C100AAC703 /* TodoCell.swift in Sources */,
 			);

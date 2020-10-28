@@ -31,7 +31,8 @@ class TodosTableController: UITableViewController {
      */
     override func viewDidLoad() {
         super.viewDidLoad()
-        datas = realm.objects(Data.self)
+//        print(Realm.Configuration.defaultConfiguration.fileURL)
+        datas = realm.objects(Data.self).filter("userName == '\(LoginController.userName)'")
     }
     
     
@@ -140,7 +141,7 @@ class TodosTableController: UITableViewController {
 extension TodosTableController: TodoDelegate, TimerDelegate, UISearchBarDelegate{
     
     /*
-     Save data ti Relam database
+     Save data into Realm database
      @parameter data: user data
      */
     private func saveData(data:Data){
@@ -163,6 +164,7 @@ extension TodosTableController: TodoDelegate, TimerDelegate, UISearchBarDelegate
         let data = Data()
         data.name = name
         data.leftTime = time
+        data.userName = LoginController.userName
         saveData(data: data)
         tableView.reloadData()
     }
@@ -210,7 +212,7 @@ extension TodosTableController: TodoDelegate, TimerDelegate, UISearchBarDelegate
      Filter specific task based on task name
      */
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        datas = realm.objects(Data.self).filter("name CONTAINS %@", searchBar.text!).sorted(byKeyPath: "leftTime", ascending: false)
+        datas = realm.objects(Data.self).filter("userName == '\(LoginController.userName)' AND name CONTAINS %@", searchBar.text!).sorted(byKeyPath: "leftTime", ascending: false)
         tableView.reloadData()
     }
     
@@ -220,7 +222,7 @@ extension TodosTableController: TodoDelegate, TimerDelegate, UISearchBarDelegate
      */
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text!.isEmpty{
-            datas = realm.objects(Data.self)
+            datas = realm.objects(Data.self).filter("userName == '\(LoginController.userName)'")
             tableView.reloadData()
             DispatchQueue.main.async {
                 searchBar.resignFirstResponder()

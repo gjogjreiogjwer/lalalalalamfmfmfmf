@@ -212,12 +212,8 @@ class MainCollectionController: UICollectionViewController {
      @returns subView: subView UIView
      */
     private func createSubView(shadowView: UIView) -> UIView{
-        let subView = UIView()
+        let subView = UIView(frame: shadowView.frame)
         subView.contentMode = .scaleToFill
-        subView.frame.size.width = shadowView.frame.width
-        subView.frame.size.height = shadowView.frame.height
-        subView.center.x = shadowView.frame.width / 2
-        subView.center.y = shadowView.frame.height / 2
         subView.layer.cornerRadius = 20.0
         subView.isUserInteractionEnabled = true
         return subView
@@ -230,14 +226,10 @@ class MainCollectionController: UICollectionViewController {
      @returns background: background image
      */
     private func createBackground(subView: UIView) -> UIImageView{
-        let background = UIImageView()
+        let background = UIImageView(frame: subView.frame)
         background.contentMode = .scaleToFill
         background.image = UIImage(named: "Pinky")
         background.layer.cornerRadius = 20.0
-        background.frame.size.width = subView.frame.width
-        background.frame.size.height = subView.frame.height
-        background.center.x = subView.frame.width / 2
-        background.center.y = subView.frame.height / 2
         background.layer.masksToBounds = true
         return background
     }
@@ -355,7 +347,6 @@ class MainCollectionController: UICollectionViewController {
                         let tempScore = message["payload", "rankMap", String(i), "score"].stringValue
                         self.rankArr.append(["name": tempName, "score": tempScore])
                     }
-                    
                     print("get ranks success")
                 }
                 else{
