@@ -59,7 +59,6 @@ class MainCollectionController: UICollectionViewController {
      */
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        getRankings()
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
