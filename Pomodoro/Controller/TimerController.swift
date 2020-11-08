@@ -93,10 +93,6 @@ class TimerController: UIViewController {
     @IBOutlet weak var background: UIImageView!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     
     // MARK: - System methods
 
@@ -159,6 +155,14 @@ class TimerController: UIViewController {
                 }
             }
         }
+    }
+    
+    
+    /*
+     Execute before delete object
+     */
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     

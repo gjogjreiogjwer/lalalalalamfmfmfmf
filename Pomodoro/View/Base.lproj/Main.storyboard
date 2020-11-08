@@ -14,14 +14,14 @@
             <objects>
                 <viewController id="6EI-Zd-9yd" customClass="LoginController" customModule="Pomodoro" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Pc7-dV-as1">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Margo" translatesAutoresizingMaskIntoConstraints="NO" id="YcK-CZ-InN">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="44" translatesAutoresizingMaskIntoConstraints="NO" id="8UB-Rz-8of">
-                                <rect key="frame" x="87" y="266" width="240" height="112"/>
+                                <rect key="frame" x="87" y="226" width="240" height="112"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QTB-m2-nVR">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="34"/>
@@ -43,7 +43,7 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FYj-nc-vyM">
-                                <rect key="frame" x="164" y="461" width="86" height="55"/>
+                                <rect key="frame" x="164" y="421" width="86" height="55"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                 <state key="normal" title="Login"/>
                                 <connections>
@@ -51,7 +51,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="63M-BT-4Jo">
-                                <rect key="frame" x="252" y="399" width="116" height="38"/>
+                                <rect key="frame" x="252" y="359" width="116" height="38"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                 <state key="normal" title="No account?"/>
                                 <connections>
@@ -67,7 +67,6 @@
                             <constraint firstItem="FYj-nc-vyM" firstAttribute="top" secondItem="63M-BT-4Jo" secondAttribute="bottom" constant="24" id="BqH-eg-469"/>
                             <constraint firstItem="YcK-CZ-InN" firstAttribute="top" secondItem="Pc7-dV-as1" secondAttribute="top" id="C2Q-F9-kuh"/>
                             <constraint firstItem="FYj-nc-vyM" firstAttribute="centerX" secondItem="Pc7-dV-as1" secondAttribute="centerX" id="EYX-Te-8zc"/>
-                            <constraint firstItem="FYj-nc-vyM" firstAttribute="top" secondItem="8UB-Rz-8of" secondAttribute="bottom" constant="83" id="Eet-Ex-5Pk"/>
                             <constraint firstItem="YcK-CZ-InN" firstAttribute="leading" secondItem="5Dq-cG-vcR" secondAttribute="leading" id="Jvv-ff-AFu"/>
                             <constraint firstItem="YcK-CZ-InN" firstAttribute="bottom" secondItem="5Dq-cG-vcR" secondAttribute="bottom" id="MTe-kF-3yw"/>
                             <constraint firstItem="5Dq-cG-vcR" firstAttribute="trailing" secondItem="63M-BT-4Jo" secondAttribute="trailing" constant="46" id="mma-Rk-g9M"/>
@@ -89,39 +88,12 @@
             </objects>
             <point key="canvasLocation" x="289.85507246376812" y="-643.20652173913049"/>
         </scene>
-        <!--Main Menu Controller-->
-        <scene sceneID="aAI-1v-yZi">
-            <objects>
-                <viewController id="JPY-Lf-XMz" customClass="MainMenuController" customModule="Pomodoro" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Oy9-sO-7ig">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Margo" translatesAutoresizingMaskIntoConstraints="NO" id="2TB-2u-XCl">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                            </imageView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="6Uy-Np-cNf"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="2TB-2u-XCl" firstAttribute="top" secondItem="Oy9-sO-7ig" secondAttribute="top" id="4vy-Gj-4r8"/>
-                            <constraint firstItem="2TB-2u-XCl" firstAttribute="trailing" secondItem="6Uy-Np-cNf" secondAttribute="trailing" id="kPx-xy-TeE"/>
-                            <constraint firstItem="2TB-2u-XCl" firstAttribute="bottom" secondItem="6Uy-Np-cNf" secondAttribute="bottom" id="raj-dv-ET4"/>
-                            <constraint firstItem="2TB-2u-XCl" firstAttribute="leading" secondItem="6Uy-Np-cNf" secondAttribute="leading" id="sAg-ee-9Q4"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="FMe-sI-gkq"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xbd-l6-XUU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1572" y="-1935"/>
-        </scene>
         <!--Account-->
         <scene sceneID="Dwp-bv-0mY">
             <objects>
                 <tableViewController id="LfG-wR-Ic8" customClass="AccountTableController" customModule="Pomodoro" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="4ES-2E-4mW">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <sections>
@@ -177,7 +149,6 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="zXr-tL-Mkq" firstAttribute="leading" secondItem="iUJ-ct-2gX" secondAttribute="trailing" constant="296" id="3NC-LN-MrM"/>
                                                 <constraint firstItem="iUJ-ct-2gX" firstAttribute="centerY" secondItem="sjr-Md-a8U" secondAttribute="centerY" id="Yhd-gj-kAX"/>
                                                 <constraint firstAttribute="trailing" secondItem="zXr-tL-Mkq" secondAttribute="trailing" constant="29" id="h6D-q8-BQx"/>
                                                 <constraint firstItem="zXr-tL-Mkq" firstAttribute="centerY" secondItem="sjr-Md-a8U" secondAttribute="centerY" id="xMn-VS-ag4"/>
@@ -210,7 +181,7 @@
             <objects>
                 <tableViewController id="npn-Wm-oh8" customClass="SettingTableController" customModule="Pomodoro" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="euU-Jf-ASK">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <sections>
@@ -283,7 +254,7 @@
             <objects>
                 <tableViewController id="5zM-lt-Drf" customClass="StyleTableController" customModule="Pomodoro" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="hWe-aX-9le">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
@@ -344,7 +315,7 @@
             <objects>
                 <tableViewController id="LQU-iu-WuA" customClass="TodosTableController" customModule="Pomodoro" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="b0x-cy-cqC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <searchBar key="tableHeaderView" contentMode="redraw" id="gVT-lB-69R">
@@ -416,7 +387,7 @@
             <objects>
                 <tableViewController id="aip-ZB-LsX" customClass="EditTableController" customModule="Pomodoro" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="4Hf-B6-GTD">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <sections>
@@ -515,11 +486,11 @@
             <objects>
                 <viewController id="Hcv-Mi-yoV" customClass="TimerController" customModule="Pomodoro" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="E4d-kR-YhC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="64" translatesAutoresizingMaskIntoConstraints="NO" id="KHr-dV-9aC">
-                                <rect key="frame" x="104.66666666666669" y="538" width="205" height="48"/>
+                                <rect key="frame" x="104.66666666666669" y="518" width="205" height="48"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NyT-i8-M6i">
                                         <rect key="frame" x="0.0" y="0.0" width="62" height="48"/>
@@ -540,13 +511,13 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sda-1S-e3O">
-                                <rect key="frame" x="137.33333333333331" y="332.33333333333331" width="139.33333333333331" height="71.666666666666686"/>
+                                <rect key="frame" x="137.33333333333331" y="322.33333333333331" width="139.33333333333331" height="71.666666666666686"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="60"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Yeta" translatesAutoresizingMaskIntoConstraints="NO" id="WLL-Qk-jSe">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="QXd-VT-qXc"/>
@@ -612,7 +583,7 @@
             <objects>
                 <collectionViewController id="WY9-7K-4sB" customClass="MainCollectionController" customModule="Pomodoro" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="mtp-3H-Gby">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Kjj-HB-wsE">
@@ -666,8 +637,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="q4D-5i-kXw"/>
         <segue reference="2QO-Db-6ep"/>
-        <segue reference="7en-rj-cKQ"/>
+        <segue reference="ARR-1H-WZO"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Margo" width="1440" height="900"/>

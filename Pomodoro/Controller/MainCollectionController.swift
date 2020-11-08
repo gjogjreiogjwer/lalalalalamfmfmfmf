@@ -28,11 +28,11 @@ class MainCollectionController: UICollectionViewController {
         "Ranking": "Ranking of scores.",
         "Style": "Current style: "]
     
-    // UIView for each card
-    private var cardViewArr: [UIView] = []
-    
     // The number of cells
     private let cellsNum = 4
+    
+    // UIView for each card
+    private var cardViewArr: [UIView] = []
     
     //Description for style card
     private var styleDescribe: UILabel!
@@ -185,7 +185,6 @@ class MainCollectionController: UICollectionViewController {
      */
     private func createShadowView() -> UIView{
         let shadowView = UIView(frame: cardFrame)
-
         shadowView.layer.shadowColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
         shadowView.layer.shadowOffset = CGSize(width: 10, height: 10)
         shadowView.layer.shadowOpacity = 0.6

@@ -60,9 +60,6 @@ class LoginController: UIViewController {
         
         createSubicon(textField: account, imageName: accountIcon)
         createSubicon(textField: password, imageName: passwordIcon)
-        
-//        uniqueUserName = UserDefaults.standard.string(forKey: "unique") ?? "null"
-//        print("User name: \(uniqueUserName)")
     }
     
     
