@@ -32,6 +32,9 @@ class LoginController: UIViewController {
     // Has account or not
     private var hasAccount = true
     
+    // textfield of account and password is null or not
+    private var accountNull = false
+    
     // Score of the user
     static var currentScore = 0.0
     
@@ -205,13 +208,16 @@ class LoginController: UIViewController {
     private func beforeLogin(paras: [String:String]){
         if paras["u"] == ""{
             notice(text: "Need Account!")
+            accountNull = true
             return
         }
         if paras["p"] == ""{
             notice(text: "Need password!")
+            accountNull = true
             return
         }
         if paras["u"] == "null"{
+            accountNull = false
             self.performSegue(withIdentifier: "login", sender: nil)
         }
     }
@@ -230,10 +236,13 @@ class LoginController: UIViewController {
                     LoginController.currentScore = message["payload", "score"].doubleValue
                     LoginController.userName = message["payload", "username"].stringValue
                     print(message)
+                    self.accountNull = false
                     self.performSegue(withIdentifier: "login", sender: nil)
                 }
                 else{
-                    self.notice(text: "Wrong password!")
+                    if !self.accountNull{
+                        self.notice(text: "Wrong password!")
+                    }
                     print("login error")
                 }
             }
@@ -255,6 +264,7 @@ class LoginController: UIViewController {
                 if message["success"] == 1{
                     LoginController.currentScore = 0
                     LoginController.userName = message["payload", "username"].stringValue
+                    self.accountNull = false
                     self.performSegue(withIdentifier: "login", sender: nil)
                 }
                 else{
