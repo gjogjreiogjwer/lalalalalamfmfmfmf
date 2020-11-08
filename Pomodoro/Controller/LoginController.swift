@@ -130,7 +130,7 @@ class LoginController: UIViewController {
         image.frame.size.width = 80
         image.frame.size.height = 80
         image.center.x = view.center.x
-        image.center.y = view.center.y - 250
+        image.center.y = view.center.y - 300
         image.layer.cornerRadius = image.frame.width / 2
         image.layer.masksToBounds = true
         image.contentMode = .scaleAspectFill
